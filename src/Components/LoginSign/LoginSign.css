@@ -1,0 +1,122 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  background: #ace5ee;
+  flex-wrap: wrap;
+}
+
+.login-left {
+  flex: 1;
+  background:#e7feff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+.full-illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-right {
+  flex: 1;
+  background: #e7feff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  min-width: 300px;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.1);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  color: #004aad;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.form-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #004aad;
+}
+
+.form-box input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #b0c4de;
+  outline: none;
+  font-size: 16px;
+}
+
+.form-box input:focus {
+  border-color: #0070ff;
+  box-shadow: 0 0 5px rgba(0, 112, 255, 0.3);
+}
+
+.form-box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #0070ff;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-box button:hover {
+  background-color: #005ccc;
+}
+
+.toggle-link {
+  margin-top: 10px;
+  text-align: center;
+  color: #0070ff;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left, .login-right {
+    flex: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .full-illustration {
+    height: 300px;
+    object-fit: contain;
+  }
+}
