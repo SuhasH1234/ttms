@@ -1,8 +1,10 @@
 import React from "react";
-import Navbar from "../Navbar/Navbar";
+import NavbarFaculty from "../Navbar/NavbarFaculty";
 
 const FacultyDashboard = () => {
-  return <Navbar />;
+  return (
+      <NavbarFaculty />
+  );
 };
 
 export default FacultyDashboard;

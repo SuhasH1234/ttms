@@ -19,12 +19,22 @@ import TransferSection from "./Components/Section/TransferSection";
 import DeactivateSections from "./Components/Section/DeactivateSections";
 import FacultyDashboard from "./Components/FacultyDashboard/FacultyDashboard";
 import StudentDashboard from "./Components/StudentDashboard/StudentDashboard";
+import AddTimetableFaculty from "./Components/Timetable/AddTimetableFaculty";
+import TransferSectionFaculty from "./Components/Section/TransferSectionFaculty";
+import NavbarFaculty from "./Components/Navbar/NavbarFaculty";
+import DeactivateSectionFaculty from "./Components/Section/DeactivateSectionFaculty";
+import AddStudentFaculty from "./Components/Student/AddStudentFaculty";
+import ViewStudentsFaculty from "./Components/Student/ViewStudentsFaculty";
+import NavbarStudent from "./Components/Navbar/NavbarStudent";
+import ViewTimetableStudent from "./Components/Timetable/ViewTimetableStudent";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginSign />} />
+
+        {/* Admin Section */}
         <Route
           path="/admin-dashboard"
           element={
@@ -151,6 +161,58 @@ function App() {
             <Navbar>
               <ViewStudents />
             </Navbar>
+          }
+        />
+
+        {/* Faculty section */}
+        <Route
+          path="/add-timetable-faculty"
+          element={
+            <NavbarFaculty>
+              <AddTimetableFaculty />
+            </NavbarFaculty>
+          }
+        />
+        <Route
+          path="/transfer-section-faculty"
+          element={
+            <NavbarFaculty>
+              <TransferSectionFaculty />
+            </NavbarFaculty>
+          }
+        />
+        <Route
+          path="/deactivate-section-faculty"
+          element={
+            <NavbarFaculty>
+              <DeactivateSectionFaculty />
+            </NavbarFaculty>
+          }
+        />
+        <Route
+          path="/add-student-faculty"
+          element={
+            <NavbarFaculty>
+              <AddStudentFaculty />
+            </NavbarFaculty>
+          }
+        />
+        <Route
+          path="/view-students-faculty"
+          element={
+            <NavbarFaculty>
+              <ViewStudentsFaculty />
+            </NavbarFaculty>
+          }
+        />
+
+        {/* Student Section */}
+        <Route
+          path="/view-timetable-student"
+          element={
+            <NavbarStudent>
+              <ViewTimetableStudent />
+            </NavbarStudent>
           }
         />
       </Routes>

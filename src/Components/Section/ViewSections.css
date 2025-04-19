@@ -1,0 +1,79 @@
+/* General container styles */
+.section-container {
+    margin-top: 40px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .section-paper {
+    padding: 30px;
+    border-radius: 16px;
+    background: #f9fafe;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Section title styles */
+  .section-title {
+    background-color: #1e88e5;
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Table header styles */
+  .section-header {
+    background-color: #1565c0;
+    color: white;
+  }
+  
+  .section-header th {
+    color: white !important;
+  }
+  
+  /* Table row styles */
+  .section-row {
+    background-color: #ffffff;
+  }
+  
+  .section-row-alt {
+    background-color: #f0f4f8;
+  }
+  
+  /* Button styling */
+  .action-btn {
+    margin: 0 5px;
+    font-weight: 600;
+    text-transform: none;
+  }
+  
+  .update {
+    background-color: #42a5f5;
+    color: white;
+  }
+  
+  .update:hover {
+    background-color: #1e88e5;
+  }
+  
+  .delete {
+    background-color: #ef5350;
+    color: white;
+  }
+  
+  .delete:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }  
