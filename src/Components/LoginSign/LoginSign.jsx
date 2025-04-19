@@ -45,7 +45,7 @@ const LoginSign = () => {
         <div className="form-box">
           <h1 className="title">Timetable Management System</h1>
           <p className="subtitle">
-            Effortless schedules, organized learning. Elevate your education journey with our Timetable Management System.
+            Effortless planning for academic excellence
           </p>
 
           <h2>{isLogin ? "Login" : "Register"}</h2>

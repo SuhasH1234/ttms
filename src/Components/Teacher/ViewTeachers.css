@@ -1,0 +1,108 @@
+/* General container styles */
+.teacher-container {
+    margin-top: 40px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .teacher-paper {
+    padding: 30px;
+    border-radius: 16px;
+    background: #f9fafe;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .teacher-title {
+    background-color: #1e88e5;
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Header row styles */
+  .teacher-header {
+    background-color: #1565c0;
+    color: white;
+  }
+  
+  .teacher-header th {
+    color: white !important;
+  }
+  
+  /* Row styling */
+  .teacher-row {
+    background-color: #ffffff;
+  }
+  
+  .teacher-row-alt {
+    background-color: #f0f4f8;
+  }
+  
+  /* Action button styles */
+  .action-btn {
+    margin: 0 5px;
+    font-weight: 600;
+    text-transform: none;
+  }
+  
+  /* Button color schemes */
+  .update {
+    background-color: #42a5f5;
+    color: white;
+  }
+  
+  .update:hover {
+    background-color: #1e88e5;
+  }
+  
+  .delete {
+    background-color: #ef5350;
+    color: white;
+  }
+  
+  .delete:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Table cell padding */
+  .MuiTableCell-root {
+    padding: 12px 16px;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .teacher-title {
+      font-size: 1.5rem;
+    }
+  
+    .teacher-table {
+      font-size: 0.9rem;
+    }
+  
+    .action-btn {
+      font-size: 0.8rem;
+    }
+  
+    .teacher-paper {
+      padding: 20px;
+    }
+  
+    .teacher-container {
+      margin-top: 20px;
+    }
+  }  

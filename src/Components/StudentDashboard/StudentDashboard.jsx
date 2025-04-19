@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../Navbar/Navbar";
+import NavbarStudent from "../Navbar/NavbarStudent";
 
 const StudentDashboard = () => {
-  return <Navbar />
+  return <NavbarStudent />
 };
 
 export default StudentDashboard;
