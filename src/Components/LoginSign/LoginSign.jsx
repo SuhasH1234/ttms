@@ -13,6 +13,7 @@ const LoginSign = () => {
   const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const navigate = useNavigate();
 
   const toggleMode = () => {
@@ -21,7 +22,7 @@ const LoginSign = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("userRole", role); // Store the role
+    localStorage.setItem("userRole", role); // Store the role in localStorage
     if (role === "faculty") {
       navigate("/faculty-dashboard");
     } else if (role === "student") {
@@ -29,7 +30,7 @@ const LoginSign = () => {
     } else if (role === "admin") {
       navigate("/admin-dashboard");
     }
-  };  
+  };
 
   return (
     <div className="login-container">
@@ -65,7 +66,13 @@ const LoginSign = () => {
             </FormControl>
 
             {!isLogin && (
-              <input type="text" placeholder="Full Name" required />
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
             )}
 
             <input
@@ -87,6 +94,7 @@ const LoginSign = () => {
             )}
             <button type="submit">{isLogin ? "Login" : "Register"}</button>
           </form>
+
           <p className="toggle-link" onClick={toggleMode}>
             {isLogin
               ? "Don't have an account? Register"

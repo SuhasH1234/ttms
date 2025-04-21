@@ -11,10 +11,12 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "./ViewStudents.css";
 
 const ViewStudents = () => {
-  const [students, setstudents] = useState([
+  const [students, setStudents] = useState([
     {
       id: 1,
       firstname: "Suhas",
@@ -35,7 +37,7 @@ const ViewStudents = () => {
       semester: 3,
       section: "B",
     },
-    // Add more student data as needed
+    // Add more student data if needed
   ]);
 
   const handleUpdate = (id) => {
@@ -43,7 +45,7 @@ const ViewStudents = () => {
   };
 
   const handleDelete = (id) => {
-    setstudents(students.filter((student) => student.id !== id));
+    setStudents((prev) => prev.filter((s) => s.id !== id));
   };
 
   return (
@@ -55,7 +57,8 @@ const ViewStudents = () => {
         <Typography variant="subtitle1" className="student-subtitle">
           List of registered students
         </Typography>
-        <Box sx={{ overflowX: "auto" }}>
+
+        <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="student-table">
             <TableHead>
               <TableRow className="student-header">
@@ -83,22 +86,26 @@ const ViewStudents = () => {
                   <TableCell>{student.semester}</TableCell>
                   <TableCell>{student.section}</TableCell>
                   <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn update"
-                      onClick={() => handleUpdate(student.id)}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn delete"
-                      onClick={() => handleDelete(student.id)}
-                    >
-                      Delete
-                    </Button>
+                    <Box display="flex" justifyContent="center" gap={1}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<EditIcon />}
+                        className="action-btn update"
+                        onClick={() => handleUpdate(student.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<DeleteIcon />}
+                        className="action-btn delete"
+                        onClick={() => handleDelete(student.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}

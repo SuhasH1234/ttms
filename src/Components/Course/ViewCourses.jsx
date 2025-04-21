@@ -11,6 +11,8 @@ import {
   Button,
   Box
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "./ViewCourses.css";
 
 const ViewCourses = () => {
@@ -18,20 +20,20 @@ const ViewCourses = () => {
     {
       id: 1,
       name: "B Tech 1st Year - SEM 1",
-      description: "B Tech 1st Year - SEM 1",
+      description: "Core fundamentals and foundational programming",
       semester: 1
     },
     {
       id: 2,
       name: "B Tech 1st Year - SEM 2",
-      description: "B Tech 1st Year - SEM 2",
+      description: "Extended programming, data structures, and more",
       semester: 2
     },
     {
       id: 3,
       name: "B Tech 2nd Year - SEM 1",
-      description: "B Tech 2nd Year - SEM 1",
-      semester: 1
+      description: "Object-oriented development and databases",
+      semester: 3
     }
   ]);
 
@@ -47,17 +49,21 @@ const ViewCourses = () => {
     <Container maxWidth="lg" className="course-container">
       <Paper className="course-paper" elevation={6}>
         <Typography variant="h4" className="course-title">
-          All Courses
+          📚 All Courses
         </Typography>
-        <Box sx={{ overflowX: "auto" }}>
+        <Typography variant="subtitle1" className="course-subtitle">
+          Manage, edit, and review available course offerings.
+        </Typography>
+
+        <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="course-table">
             <TableHead>
               <TableRow className="course-header">
-                <TableCell><strong>Course Id</strong></TableCell>
-                <TableCell><strong>Course Name</strong></TableCell>
+                <TableCell><strong>ID</strong></TableCell>
+                <TableCell><strong>Name</strong></TableCell>
                 <TableCell><strong>Description</strong></TableCell>
                 <TableCell><strong>Semester</strong></TableCell>
-                <TableCell align="center"><strong>Action</strong></TableCell>
+                <TableCell align="center"><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,22 +77,26 @@ const ViewCourses = () => {
                   <TableCell>{course.description}</TableCell>
                   <TableCell>{course.semester}</TableCell>
                   <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn update"
-                      onClick={() => handleUpdate(course.id)}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn delete"
-                      onClick={() => handleDelete(course.id)}
-                    >
-                      Delete
-                    </Button>
+                    <Box display="flex" justifyContent="center" gap={1}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<EditIcon />}
+                        className="action-btn update"
+                        onClick={() => handleUpdate(course.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<DeleteIcon />}
+                        className="action-btn delete"
+                        onClick={() => handleDelete(course.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}

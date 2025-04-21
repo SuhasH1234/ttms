@@ -1,4 +1,3 @@
-// src/Components/Layout/Navbar.jsx
 import React, { useState } from "react";
 import {
   AppBar,
@@ -46,16 +45,14 @@ const NavbarStudent = ({ children }) => {
     navigate("/");
   };
 
-  const handleLogoClick = () => {
-    navigate("/student-dashboard");  // Navigate to Admin Dashboard when logo or title is clicked
-  };
+  const handleLogoClick = () => navigate("/student-dashboard");
 
   const drawer = (
     <Box>
       <Toolbar>
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
           <IconButton onClick={handleLogoClick}>
-            <FitbitIcon fontSize="large" sx={{color: 'white'}} />
+            <FitbitIcon fontSize="large" sx={{ color: 'white' }} />
           </IconButton>
         </Box>
       </Toolbar>
@@ -104,7 +101,7 @@ const NavbarStudent = ({ children }) => {
               variant="h6"
               component="div"
               sx={{ fontWeight: 600 }}
-              onClick={handleLogoClick}  // Navigate to Admin Dashboard when clicked
+              onClick={handleLogoClick}
             >
               Student Dashboard
             </Typography>

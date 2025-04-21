@@ -1,108 +1,142 @@
-/* General container styles */
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  background: linear-gradient(120deg, #f3f4f6, #eef2ff);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Container for the teacher table */
 .teacher-container {
-    margin-top: 40px;
-    animation: fadeInUp 0.8s ease-out;
-  }
-  
+  padding: 30px 20px;
+}
+
+/* Paper Box Styling */
+.teacher-paper {
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
+}
+
+.teacher-paper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+}
+
+/* Title Styling */
+.teacher-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4f46e5;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+.teacher-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Table Header */
+.teacher-header th,
+.teacher-header td {
+  background-color: #f3f4f6;
+  color: #111827;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 12px 10px;
+}
+
+/* Table Body */
+.teacher-row td,
+.teacher-row-alt td {
+  padding: 12px 10px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Zebra Stripe Rows */
+.teacher-row {
+  background-color: #ffffff;
+}
+
+.teacher-row-alt {
+  background-color: #f9fafb;
+}
+
+/* Action Buttons */
+.action-btn {
+  margin: 0 10px 0 0; /* More space between buttons */
+  padding: 8px 14px;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 8px;
+  text-transform: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Update Button */
+.action-btn.update {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: 1px solid #4f46e5;
+}
+
+.action-btn.update:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+  transform: translateY(-2px);
+}
+
+/* Delete Button */
+.action-btn.delete {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: 1px solid #ef4444;
+}
+
+.action-btn.delete:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Responsive Table Scroll */
+@media (max-width: 768px) {
   .teacher-paper {
-    padding: 30px;
-    border-radius: 16px;
-    background: #f9fafe;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 25px 20px;
   }
-  
-  /* Title styling */
+
   .teacher-title {
-    background-color: #1e88e5;
-    color: white;
-    padding: 16px;
-    border-radius: 12px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 24px;
   }
-  
-  /* Header row styles */
-  .teacher-header {
-    background-color: #1565c0;
-    color: white;
-  }
-  
-  .teacher-header th {
-    color: white !important;
-  }
-  
-  /* Row styling */
-  .teacher-row {
-    background-color: #ffffff;
-  }
-  
-  .teacher-row-alt {
-    background-color: #f0f4f8;
-  }
-  
-  /* Action button styles */
+
   .action-btn {
-    margin: 0 5px;
-    font-weight: 600;
-    text-transform: none;
+    padding: 6px 12px;
+    font-size: 12px;
   }
-  
-  /* Button color schemes */
-  .update {
-    background-color: #42a5f5;
-    color: white;
+
+  .teacher-header th,
+  .teacher-header td {
+    font-size: 12px;
+    padding: 10px 8px;
   }
-  
-  .update:hover {
-    background-color: #1e88e5;
+
+  .teacher-row td,
+  .teacher-row-alt td {
+    font-size: 12px;
+    padding: 10px 8px;
   }
-  
-  .delete {
-    background-color: #ef5350;
-    color: white;
-  }
-  
-  .delete:hover {
-    background-color: #d32f2f;
-  }
-  
-  /* Table cell padding */
-  .MuiTableCell-root {
-    padding: 12px 16px;
-  }
-  
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 600px) {
-    .teacher-title {
-      font-size: 1.5rem;
-    }
-  
-    .teacher-table {
-      font-size: 0.9rem;
-    }
-  
-    .action-btn {
-      font-size: 0.8rem;
-    }
-  
-    .teacher-paper {
-      padding: 20px;
-    }
-  
-    .teacher-container {
-      margin-top: 20px;
-    }
-  }  
+}
