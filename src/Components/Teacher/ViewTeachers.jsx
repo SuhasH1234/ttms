@@ -9,8 +9,10 @@ import {
   TableCell,
   TableBody,
   Button,
-  Box
+  Box,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "./ViewTeachers.css";
 
 const ViewTeachers = () => {
@@ -35,7 +37,7 @@ const ViewTeachers = () => {
       semester: 3,
       section: 1,
     },
-    // Add more teacher data as needed
+    // Add more teachers if needed
   ]);
 
   const handleUpdate = (id) => {
@@ -43,27 +45,28 @@ const ViewTeachers = () => {
   };
 
   const handleDelete = (id) => {
-    setTeachers(teachers.filter((teacher) => teacher.id !== id));
+    setTeachers((prev) => prev.filter((t) => t.id !== id));
   };
 
   return (
     <Container maxWidth="lg" className="teacher-container">
       <Paper className="teacher-paper" elevation={6}>
         <Typography variant="h4" className="teacher-title">
-          All Teachers
+          👨‍🏫 All Teachers
         </Typography>
-        <Box sx={{ overflowX: "auto" }}>
+
+        <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="teacher-table">
             <TableHead>
               <TableRow className="teacher-header">
                 <TableCell><strong>First Name</strong></TableCell>
                 <TableCell><strong>Last Name</strong></TableCell>
-                <TableCell><strong>Email Id</strong></TableCell>
-                <TableCell><strong>Phone NO</strong></TableCell>
+                <TableCell><strong>Email</strong></TableCell>
+                <TableCell><strong>Phone No</strong></TableCell>
                 <TableCell><strong>Address</strong></TableCell>
                 <TableCell><strong>Semester</strong></TableCell>
                 <TableCell><strong>Section</strong></TableCell>
-                <TableCell align="center"><strong>Action</strong></TableCell>
+                <TableCell align="center"><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -80,22 +83,26 @@ const ViewTeachers = () => {
                   <TableCell>{teacher.semester}</TableCell>
                   <TableCell>{teacher.section}</TableCell>
                   <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn update"
-                      onClick={() => handleUpdate(teacher.id)}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn delete"
-                      onClick={() => handleDelete(teacher.id)}
-                    >
-                      Delete
-                    </Button>
+                    <Box display="flex" justifyContent="center" gap={1}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<EditIcon />}
+                        className="action-btn update"
+                        onClick={() => handleUpdate(teacher.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<DeleteIcon />}
+                        className="action-btn delete"
+                        onClick={() => handleDelete(teacher.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}

@@ -15,6 +15,7 @@ const AddSection = () => {
   const [semester, setSemester] = useState("");
 
   const handleAddSection = () => {
+    // Handle your section add logic here (e.g., API call)
     console.log("Section:", section);
     console.log("Description:", description);
     console.log("Semester:", semester);

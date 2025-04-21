@@ -11,6 +11,9 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import UploadIcon from "@mui/icons-material/Upload";
 import "./ViewSections.css";
 
 const ViewSections = () => {
@@ -40,41 +43,33 @@ const ViewSections = () => {
   };
 
   const handleDelete = (id) => {
-    setSections(sections.filter((s) => s.id !== id));
+    setSections((prev) => prev.filter((section) => section.id !== id));
   };
 
-  const handleTimetable = (timetable) => {
-    alert(`Upload timetable for: ${timetable}`);
+  const handleTimetable = (name) => {
+    alert(`Upload timetable for: ${name}`);
   };
 
   return (
     <Container maxWidth="lg" className="section-container">
       <Paper className="section-paper" elevation={6}>
         <Typography variant="h4" className="section-title">
-          All Sections
+          🧾 All Sections
         </Typography>
-        <Box sx={{ overflowX: "auto" }}>
+        <Typography variant="subtitle1" className="section-subtitle">
+          List of available sections with uploadable timetables
+        </Typography>
+
+        <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="section-table">
             <TableHead>
               <TableRow className="section-header">
-                <TableCell>
-                  <strong>Section Id</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Section Name</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Description</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Semester</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Timetable</strong>
-                </TableCell>
-                <TableCell align="center">
-                  <strong>Action</strong>
-                </TableCell>
+                <TableCell><strong>Section ID</strong></TableCell>
+                <TableCell><strong>Name</strong></TableCell>
+                <TableCell><strong>Description</strong></TableCell>
+                <TableCell><strong>Semester</strong></TableCell>
+                <TableCell><strong>Timetable</strong></TableCell>
+                <TableCell align="center"><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -87,34 +82,37 @@ const ViewSections = () => {
                   <TableCell>{section.name}</TableCell>
                   <TableCell>{section.description}</TableCell>
                   <TableCell>{section.semester}</TableCell>
-                  <TableCell>{section.timetable}</TableCell>
+                  <TableCell>Not Uploaded</TableCell>
                   <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn update"
-                      onClick={() => handleTimetable(section.timetable)}
-                    >
-                      Upload Time Table
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn update"
-                      onClick={() => handleUpdate(section.id)}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className="action-btn delete"
-                      onClick={() => handleDelete(section.id)}
-                    >
-                      Delete
-                    </Button>
+                    <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<UploadIcon />}
+                        className="action-btn upload"
+                        onClick={() => handleTimetable(section.name)}
+                      >
+                        Upload Timetable
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<EditIcon />}
+                        className="action-btn update"
+                        onClick={() => handleUpdate(section.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<DeleteIcon />}
+                        className="action-btn delete"
+                        onClick={() => handleDelete(section.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
