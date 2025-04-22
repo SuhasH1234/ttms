@@ -6,17 +6,36 @@ import {
   Button,
   Box,
   Paper,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import "./AddSemester.css";
+import axios from "axios";
 
 const AddSemester = () => {
   const [semester, setSemester] = useState("");
   const [description, setDescription] = useState("");
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
-  const handleAddSemester = () => {
-    console.log("Semester:", semester);
-    console.log("Description:", description);
-    // Backend integration goes here
+  const handleSnackbarClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
+  const handleAddSemester = async () => {
+    const payload = {
+      semName: semester,
+      semDescription: description,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8080/semester/create-semester", payload);
+      setSnackbar({ open: true, message: response.data || "Semester added successfully!", severity: "success" });
+      setSemester("");
+      setDescription("");
+    } catch (error) {
+      console.error("Error while creating semester");
+      setSnackbar({ open: true, message: "Failed to create Semester", severity: "error" });
+    }
   };
 
   return (
@@ -63,6 +82,18 @@ const AddSemester = () => {
           </form>
         </Paper>
       </Container>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbar.severity} sx={{ width: "100%" }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

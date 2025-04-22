@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Container,
   Paper,
@@ -10,6 +11,11 @@ import {
   TableBody,
   Button,
   Box,
+  Modal,
+  TextField,
+  Grid,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,38 +24,82 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import "./ViewSemester.css";
 
 const ViewSemester = () => {
-  const [semesters, setSemesters] = useState([
-    {
-      id: 1,
-      name: "B Tech 1st Year - SEM 1",
-      description: "B Tech 1st Year - SEM 1",
-    },
-    {
-      id: 2,
-      name: "B Tech 1st Year - SEM 2",
-      description: "B Tech 1st Year - SEM 2",
-    },
-    {
-      id: 3,
-      name: "B Tech 2nd Year - SEM 1",
-      description: "B Tech 2nd Year - SEM 1",
-    },
-  ]);
+  const [semesters, setSemesters] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [currentSemester, setCurrentSemester] = useState({
+    sid: "",
+    semName: "",
+    semDescription: "",
+  });
 
-  const handleUpdate = (id) => {
-    alert(`Update semester with ID: ${id}`);
+  // Snackbar state
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  useEffect(() => {
+    fetchSemesters();
+  }, []);
+
+  const fetchSemesters = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/semester/all-semesters");
+      setSemesters(response.data);
+    } catch (error) {
+      console.error("Error fetching semesters:", error);
+    }
   };
 
-  const handleDelete = (id) => {
-    setSemesters((prev) => prev.filter((sem) => sem.id !== id));
+  const handleDelete = async (sid) => {
+    try {
+      await axios.delete(`http://localhost:8080/semester/semesters/${sid}`);
+      setSemesters((prev) => prev.filter((sem) => sem.sid !== sid));
+      showSnackbar("Semester deleted successfully", "success");
+    } catch (error) {
+      console.error("Error deleting semester:", error);
+      showSnackbar("Failed to delete semester", "error");
+    }
   };
 
-  const handleCourses = (id) => {
-    alert(`View courses for semester ID: ${id}`);
+  const handleUpdateClick = (semester) => {
+    setCurrentSemester(semester);
+    setOpen(true);
   };
 
-  const handleSections = (id) => {
-    alert(`View sections for semester ID: ${id}`);
+  const handleUpdateClose = () => {
+    setOpen(false);
+    setCurrentSemester({ sid: "", semName: "", semDescription: "" });
+  };
+
+  const handleSaveUpdate = async () => {
+    try {
+      const updatedSemester = { ...currentSemester };
+      await axios.put("http://localhost:8080/semester/update-semester", updatedSemester);
+      setSemesters((prev) =>
+        prev.map((semester) =>
+          semester.sid === updatedSemester.sid ? updatedSemester : semester
+        )
+      );
+      handleUpdateClose();
+      showSnackbar("Semester updated successfully", "success");
+    } catch (error) {
+      console.error("Error updating semester:", error);
+      showSnackbar("Failed to update semester", "error");
+    }
+  };
+
+  const showSnackbar = (message, severity) => {
+    setSnackbar({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -72,12 +122,12 @@ const ViewSemester = () => {
             <TableBody>
               {semesters.map((semester, index) => (
                 <TableRow
-                  key={semester.id}
+                  key={semester.sid}
                   className={index % 2 === 0 ? "semester-row" : "semester-row-alt"}
                 >
-                  <TableCell>{semester.id}</TableCell>
-                  <TableCell>{semester.name}</TableCell>
-                  <TableCell>{semester.description}</TableCell>
+                  <TableCell>{semester.sid}</TableCell>
+                  <TableCell>{semester.semName}</TableCell>
+                  <TableCell>{semester.semDescription}</TableCell>
                   <TableCell align="center">
                     <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
                       <Button
@@ -85,7 +135,7 @@ const ViewSemester = () => {
                         size="small"
                         className="action-btn update"
                         startIcon={<EditIcon />}
-                        onClick={() => handleUpdate(semester.id)}
+                        onClick={() => handleUpdateClick(semester)}
                       >
                         Update
                       </Button>
@@ -95,7 +145,7 @@ const ViewSemester = () => {
                         size="small"
                         className="action-btn delete"
                         startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(semester.id)}
+                        onClick={() => handleDelete(semester.sid)}
                       >
                         Delete
                       </Button>
@@ -105,7 +155,6 @@ const ViewSemester = () => {
                         size="small"
                         className="action-btn courses"
                         startIcon={<PlaylistAddIcon />}
-                        onClick={() => handleCourses(semester.id)}
                       >
                         Courses
                       </Button>
@@ -115,7 +164,6 @@ const ViewSemester = () => {
                         size="small"
                         className="action-btn sections"
                         startIcon={<FormatListBulletedIcon />}
-                        onClick={() => handleSections(semester.id)}
                       >
                         Sections
                       </Button>
@@ -127,6 +175,65 @@ const ViewSemester = () => {
           </Table>
         </Box>
       </Paper>
+
+      {/* Modal for Updating Semester */}
+      <Modal open={open} onClose={handleUpdateClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography variant="h6" sx={{color: 'black', fontWeight: 'bold'}} mb={4}>Update Semester</Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                label="Semester Name"
+                variant="outlined"
+                fullWidth
+                value={currentSemester.semName}
+                onChange={(e) => setCurrentSemester({ ...currentSemester, semName: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Semester Description"
+                variant="outlined"
+                fullWidth
+                value={currentSemester.semDescription}
+                onChange={(e) => setCurrentSemester({ ...currentSemester, semDescription: e.target.value })}
+              />
+            </Grid>
+          </Grid>
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <Button className="model-btn" onClick={handleUpdateClose}>
+              Cancel
+            </Button>
+            <Button className="model-btn" onClick={handleSaveUpdate}>
+              Update
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbar.severity} sx={{ width: "100%" }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
