@@ -20,7 +20,7 @@ body {
   display: flex;
   height: 100%;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   border-radius: 16px;
   overflow: hidden;
   position: relative;
@@ -50,8 +50,8 @@ body {
 }
 
 .login-right {
-  flex: 1.5;
-  padding: 40px;
+  flex: 1;
+  /* padding: 40px; */
   display: flex;
   flex-direction: column;
   justify-content: center;

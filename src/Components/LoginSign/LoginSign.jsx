@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Snackbar, Alert } from "@mui/material";
+import axios from "axios";
 import "./LoginSign.css";
 
 const LoginSign = () => {
@@ -14,91 +10,95 @@ const LoginSign = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const navigate = useNavigate();
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
+    setRole("student"); // reset role when toggling
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("userRole", role); // Store the role in localStorage
-    if (role === "faculty") {
+    localStorage.setItem("userRole", role);
+
+    if (role === "admin") {
+      try {
+        const response = await axios.post("http://localhost:8080/admin/login", {
+          userRole: "Admin",
+          adminEmail: email,
+          adminPassword: password,
+        });        
+        
+        if (response.status === 200) {
+          setSnackbarMessage("Login successful");
+          setSnackbarSeverity("success");
+          setOpenSnackbar(true);
+          
+          // Delay navigation to see the "Login successful" message
+          setTimeout(() => {
+            navigate("/admin-dashboard");
+          }, 3000); // Wait for 3 seconds before navigating
+        }
+      } catch (error) {
+        setSnackbarMessage("Invalid credentials");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+      }
+    } else if (role === "faculty") {
       navigate("/faculty-dashboard");
     } else if (role === "student") {
       navigate("/student-dashboard");
-    } else if (role === "admin") {
-      navigate("/admin-dashboard");
     }
   };
 
   return (
     <div className="login-container">
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={10000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
       <div className="login-left">
-        <img
-          src="/loginTTMS.png"
-          alt="Timetable illustration"
-          className="full-illustration"
-        />
+        <img src="/loginTTMS.png" alt="Timetable illustration" className="full-illustration" />
       </div>
 
       <div className="login-right">
         <div className="form-box">
           <h1 className="title">Timetable Management System</h1>
-          <p className="subtitle">
-            Effortless planning for academic excellence
-          </p>
+          <p className="subtitle">Effortless planning for academic excellence</p>
 
           <h2>{isLogin ? "Login" : "Register"}</h2>
           <form onSubmit={handleSubmit}>
             <FormControl fullWidth style={{ marginBottom: "15px" }}>
               <InputLabel>User Role</InputLabel>
-              <Select
-                value={role}
-                label="User Role"
-                onChange={(e) => setRole(e.target.value)}
-                required
-              >
-                <MenuItem value="faculty">Faculty</MenuItem>
+              <Select value={role} label="User Role" onChange={(e) => setRole(e.target.value)} required>
                 <MenuItem value="student">Student</MenuItem>
-                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="faculty">Faculty</MenuItem>
+                {isLogin && <MenuItem value="admin">Admin</MenuItem>}
               </Select>
             </FormControl>
 
             {!isLogin && (
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
+              <input type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
             )}
 
-            <input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            {!isLogin && (
-              <input type="password" placeholder="Confirm Password" required />
-            )}
+            <input type="email" placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <input type="password" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            {!isLogin && <input type="password" placeholder="Confirm Password" required />}
             <button type="submit">{isLogin ? "Login" : "Register"}</button>
           </form>
 
           <p className="toggle-link" onClick={toggleMode}>
-            {isLogin
-              ? "Don't have an account? Register"
-              : "Already have an account? Login"}
+            {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
           </p>
         </div>
       </div>
