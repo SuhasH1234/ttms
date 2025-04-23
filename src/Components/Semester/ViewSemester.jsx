@@ -125,7 +125,7 @@ const ViewSemester = () => {
                   key={semester.sid}
                   className={index % 2 === 0 ? "semester-row" : "semester-row-alt"}
                 >
-                  <TableCell>{semester.sid}</TableCell>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>{semester.semName}</TableCell>
                   <TableCell>{semester.semDescription}</TableCell>
                   <TableCell align="center">
@@ -213,10 +213,10 @@ const ViewSemester = () => {
             </Grid>
           </Grid>
           <Box mt={2} display="flex" justifyContent="space-between">
-            <Button className="model-btn" onClick={handleUpdateClose}>
+            <Button sx={{backgroundcolor: '#4f46e5color', color: '#ffffff'}} onClick={handleUpdateClose}>
               Cancel
             </Button>
-            <Button className="model-btn" onClick={handleSaveUpdate}>
+            <Button sx={{backgroundcolor: '#4f46e5color', color: '#ffffff'}} onClick={handleSaveUpdate}>
               Update
             </Button>
           </Box>
