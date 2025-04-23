@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Container,
   TextField,
@@ -6,6 +7,12 @@ import {
   Button,
   Box,
   Paper,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import "./AddCourse.css";
 
@@ -13,11 +20,56 @@ const AddCourse = () => {
   const [course, setCourse] = useState("");
   const [description, setDescription] = useState("");
   const [semester, setSemester] = useState("");
+  const [semesters, setSemesters] = useState([]);
 
-  const handleAddCourse = () => {
-    console.log("Course:", course);
-    console.log("Description:", description);
-    console.log("Semester:", semester);
+  // Snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  useEffect(() => {
+    const fetchSemesters = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/semester/all-semesters");
+        const semesterNames = response.data.map((sem) => sem.semName);
+        setSemesters(semesterNames);
+      } catch (error) {
+        console.error("Error fetching semesters:", error);
+        showSnackbar("Failed to fetch semesters.", "error");
+      }
+    };
+
+    fetchSemesters();
+  }, []);
+
+  const handleAddCourse = async () => {
+    const newCourse = {
+      courseName: course,
+      courseDescription: description,
+      semName: semester,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8080/course/create-course", newCourse);
+      console.log("Course added successfully:", response.data);
+      showSnackbar("Course added successfully!", "success");
+      setCourse("");
+      setDescription("");
+      setSemester("");
+    } catch (error) {
+      console.error("Error adding course:", error);
+      showSnackbar("Failed to add course.", "error");
+    }
+  };
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbarMsg(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -39,7 +91,7 @@ const AddCourse = () => {
         >
           <TextField
             fullWidth
-            label="Enter course"
+            label="Enter Course"
             variant="outlined"
             margin="normal"
             value={course}
@@ -57,15 +109,23 @@ const AddCourse = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="input-field"
           />
-          <TextField
-            fullWidth
-            label="Enter Semester"
-            variant="outlined"
-            margin="normal"
-            value={semester}
-            onChange={(e) => setSemester(e.target.value)}
-            className="input-field"
-          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="semester-label">Select Semester</InputLabel>
+            <Select
+              labelId="semester-label"
+              value={semester}
+              onChange={(e) => setSemester(e.target.value)}
+              label="Select Semester"
+              className="input-field"
+            >
+              {semesters.map((semName, index) => (
+                <MenuItem key={index} value={semName}>
+                  {semName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <Box mt={3} textAlign="center">
             <Button
               variant="contained"
@@ -78,6 +138,18 @@ const AddCourse = () => {
           </Box>
         </form>
       </Paper>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity={snackbarSeverity} onClose={handleSnackbarClose} sx={{ width: "100%" }}>
+          {snackbarMsg}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

@@ -1,4 +1,3 @@
-// src/Components/Layout/Navbar.jsx
 import React, { useState } from "react";
 import {
   AppBar,
@@ -27,42 +26,60 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import FitbitIcon from "@mui/icons-material/Fitbit";
+import axios from "axios";
 import "./Navbar.css";
 
 const drawerWidth = 240;
 
 const menuItems = [
   { text: "View Timetable", icon: <CalendarTodayIcon />, path: "/view-timetable" },
-  { text: "Add Semester", icon: <GradeIcon />, path: "/add-semester"  },
-  { text: "View Semester", icon: <GradeIcon />, path: "/view-semester"  },
-  { text: "Add Course", icon: <LibraryBooksIcon />, path: "/add-course"  },
-  { text: "View Courses", icon: <LibraryBooksIcon />, path: "/view-courses"  },
-  { text: "Add Section", icon: <GroupAddIcon />, path: "/add-section"  },
-  { text: "View Section", icon: <GroupAddIcon />, path: "/view-sections"  },
-  { text: "Register Teacher", icon: <SupervisorAccountIcon />, path: "/register-teacher"  },
-  { text: "View Teachers", icon: <SupervisorAccountIcon />, path: "/view-teachers"  },
-  { text: "Add Student", icon: <PeopleIcon />, path: "/add-student"  },
-  { text: "View Students", icon: <PeopleIcon />, path: "/view-students"  },
+  { text: "Add Semester", icon: <GradeIcon />, path: "/add-semester" },
+  { text: "View Semester", icon: <GradeIcon />, path: "/view-semester" },
+  { text: "Add Course", icon: <LibraryBooksIcon />, path: "/add-course" },
+  { text: "View Courses", icon: <LibraryBooksIcon />, path: "/view-courses" },
+  { text: "Add Section", icon: <GroupAddIcon />, path: "/add-section" },
+  { text: "View Section", icon: <GroupAddIcon />, path: "/view-sections" },
+  { text: "Register Teacher", icon: <SupervisorAccountIcon />, path: "/register-teacher" },
+  { text: "View Teachers", icon: <SupervisorAccountIcon />, path: "/view-teachers" },
+  { text: "Add Student", icon: <PeopleIcon />, path: "/add-student" },
+  { text: "View Students", icon: <PeopleIcon />, path: "/view-students" },
   { text: "Logout", icon: <ExitToAppIcon />, path: "/" },
 ];
 
 const Navbar = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [adminDetails, setAdminDetails] = useState({});
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
   const handleNavigation = (path) => path && navigate(path);
 
-  const handleProfileClick = (event) => setAnchorEl(event.currentTarget);
+  const handleProfileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    fetchAdminDetails();
+  };
+
   const handleProfileClose = () => setAnchorEl(null);
+
   const handleLogout = () => {
     handleProfileClose();
     navigate("/");
   };
 
   const handleLogoClick = () => {
-    navigate("/admin-dashboard");  // Navigate to Admin Dashboard when logo or title is clicked
+    navigate("/admin-dashboard");
+  };
+
+  const fetchAdminDetails = async () => {
+    try {
+      // Ideally the adminId should come from localStorage/session after login — I'm using 1 as placeholder
+      const adminId = 1;
+      const response = await axios.get(`http://localhost:8080/admin/${adminId}`);
+      setAdminDetails(response.data);
+    } catch (error) {
+      console.error("Failed to fetch admin details:", error);
+    }
   };
 
   const drawer = (
@@ -70,7 +87,7 @@ const Navbar = ({ children }) => {
       <Toolbar>
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
           <IconButton onClick={handleLogoClick}>
-            <FitbitIcon fontSize="large" sx={{color: 'white'}} />
+            <FitbitIcon fontSize="large" sx={{ color: "white" }} />
           </IconButton>
         </Box>
       </Toolbar>
@@ -103,7 +120,6 @@ const Navbar = ({ children }) => {
         }}
       >
         <Toolbar>
-          {/* Hamburger Icon - Left */}
           <IconButton
             color="inherit"
             edge="start"
@@ -113,30 +129,28 @@ const Navbar = ({ children }) => {
             <MenuIcon />
           </IconButton>
 
-          {/* Title - Center */}
           <Box sx={{ flexGrow: 1, textAlign: "center" }}>
             <Typography
               variant="h6"
               component="div"
               sx={{ fontWeight: 600 }}
-              onClick={handleLogoClick}  // Navigate to Admin Dashboard when clicked
+              onClick={handleLogoClick}
             >
               Admin Dashboard
             </Typography>
           </Box>
 
-          {/* Profile Icon - Right */}
           <IconButton color="inherit" onClick={handleProfileClick}>
             <AccountCircleIcon fontSize="large" />
           </IconButton>
 
-          {/* Profile Dropdown */}
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleProfileClose}
-          >
-            <MenuItem disabled>Logged in as: Admin</MenuItem>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleProfileClose}>
+            <MenuItem disabled>
+              Logged in as: {adminDetails.userRole || "Admin"}
+            </MenuItem>
+            <MenuItem disabled>
+              Email: {adminDetails.adminEmail || "admin@example.com"}
+            </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
               <ExitToAppIcon fontSize="small" sx={{ mr: 1 }} />
@@ -146,7 +160,6 @@ const Navbar = ({ children }) => {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer */}
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -172,7 +185,6 @@ const Navbar = ({ children }) => {
         </Drawer>
       </Box>
 
-      {/* Page Content */}
       <Box
         component="main"
         className="main-content"

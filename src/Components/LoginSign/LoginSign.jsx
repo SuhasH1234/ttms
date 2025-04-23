@@ -40,7 +40,7 @@ const LoginSign = () => {
           // Delay navigation to see the "Login successful" message
           setTimeout(() => {
             navigate("/admin-dashboard");
-          }, 3000); // Wait for 3 seconds before navigating
+          }, 1000); // Wait for 3 seconds before navigating
         }
       } catch (error) {
         setSnackbarMessage("Invalid credentials");
