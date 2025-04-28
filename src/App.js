@@ -11,8 +11,8 @@ import AddCourse from "./Components/Course/AddCourse";
 import ViewCourses from "./Components/Course/ViewCourses";
 import AddSection from "./Components/Section/AddSection";
 import ViewSections from "./Components/Section/ViewSections";
-import RegisterTeacher from "./Components/Teacher/RegisterTeacher";
-import ViewTeachers from "./Components/Teacher/ViewTeachers";
+import RegisterFaculty from "./Components/Faculty/RegisterFaculty";
+import ViewFaculty from "./Components/Faculty/ViewFaculty";
 import AddStudent from "./Components/Student/AddStudent";
 import ViewStudents from "./Components/Student/ViewStudents";
 import TransferSection from "./Components/Section/TransferSection";
@@ -67,6 +67,7 @@ function App() {
             </Navbar>
           }
         />
+
         <Route
           path="/add-semester"
           element={
@@ -132,18 +133,18 @@ function App() {
           }
         />
         <Route
-          path="/register-teacher"
+          path="/register-faculty"
           element={
             <Navbar>
-              <RegisterTeacher />
+              <RegisterFaculty />
             </Navbar>
           }
         />
         <Route
-          path="/view-teachers"
+          path="/view-faculty"
           element={
             <Navbar>
-              <ViewTeachers />
+              <ViewFaculty />
             </Navbar>
           }
         />

@@ -19,8 +19,6 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import "./ViewSemester.css";
 
 const ViewSemester = () => {
@@ -106,7 +104,7 @@ const ViewSemester = () => {
     <Container maxWidth="lg" className="semester-container">
       <Paper elevation={6} className="semester-paper">
         <Typography variant="h4" className="semester-title">
-          🎓 All Semesters
+          🎓 All Semester's
         </Typography>
 
         <Box sx={{ overflowX: "auto" }}>
@@ -148,24 +146,6 @@ const ViewSemester = () => {
                         onClick={() => handleDelete(semester.sid)}
                       >
                         Delete
-                      </Button>
-
-                      <Button
-                        variant="contained"
-                        size="small"
-                        className="action-btn courses"
-                        startIcon={<PlaylistAddIcon />}
-                      >
-                        Courses
-                      </Button>
-
-                      <Button
-                        variant="contained"
-                        size="small"
-                        className="action-btn sections"
-                        startIcon={<FormatListBulletedIcon />}
-                      >
-                        Sections
                       </Button>
                     </Box>
                   </TableCell>

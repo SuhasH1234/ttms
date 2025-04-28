@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   AppBar,
   Toolbar,
@@ -33,19 +34,42 @@ const menuItems = [
 const NavbarStudent = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [studentDetails, setStudentDetails] = useState({});
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
   const handleNavigation = (path) => path && navigate(path);
 
-  const handleProfileClick = (event) => setAnchorEl(event.currentTarget);
+  const handleProfileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    fetchStudentDetails();
+  };
+
   const handleProfileClose = () => setAnchorEl(null);
+
   const handleLogout = () => {
     handleProfileClose();
+    localStorage.removeItem("studentId"); // optionally clear studentId on logout
     navigate("/");
   };
 
-  const handleLogoClick = () => navigate("/student-dashboard");
+  const handleLogoClick = () => {
+    navigate("/student-dashboard");
+  };
+
+  const fetchStudentDetails = async () => {
+    try {
+      const studentId = localStorage.getItem('studentId');
+      if (!studentId) {
+        console.error('No studentId found in localStorage.');
+        return;
+      }
+      const response = await axios.get(`http://localhost:8080/student/${studentId}`);
+      setStudentDetails(response.data);
+    } catch (error) {
+      console.error('Failed to fetch student details:', error);
+    }
+  };
 
   const drawer = (
     <Box>
@@ -85,7 +109,6 @@ const NavbarStudent = ({ children }) => {
         }}
       >
         <Toolbar>
-          {/* Hamburger Icon - Left */}
           <IconButton
             color="inherit"
             edge="start"
@@ -95,7 +118,6 @@ const NavbarStudent = ({ children }) => {
             <MenuIcon />
           </IconButton>
 
-          {/* Title - Center */}
           <Box sx={{ flexGrow: 1, textAlign: "center" }}>
             <Typography
               variant="h6"
@@ -107,18 +129,21 @@ const NavbarStudent = ({ children }) => {
             </Typography>
           </Box>
 
-          {/* Profile Icon - Right */}
           <IconButton color="inherit" onClick={handleProfileClick}>
             <AccountCircleIcon fontSize="large" />
           </IconButton>
 
-          {/* Profile Dropdown */}
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleProfileClose}
           >
-            <MenuItem disabled>Logged in as: Student</MenuItem>
+            <MenuItem disabled>
+              Logged in as: {studentDetails.userRole || "Not available"}
+            </MenuItem>
+            <MenuItem disabled>
+              Email: {studentDetails.studentEmail || "Not available"}
+            </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
               <ExitToAppIcon fontSize="small" sx={{ mr: 1 }} />
@@ -128,7 +153,6 @@ const NavbarStudent = ({ children }) => {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer */}
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -154,7 +178,6 @@ const NavbarStudent = ({ children }) => {
         </Drawer>
       </Box>
 
-      {/* Page Content */}
       <Box
         component="main"
         className="main-content"

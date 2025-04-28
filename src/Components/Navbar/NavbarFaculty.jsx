@@ -1,5 +1,6 @@
 // src/Components/Layout/Navbar.jsx
 import React, { useState } from "react";
+import axios from "axios";
 import {
   AppBar,
   Toolbar,
@@ -40,13 +41,19 @@ const menuItems = [
 const NavbarFaculty = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [facultyDetails, setFacultyDetails] = useState({});
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
   const handleNavigation = (path) => path && navigate(path);
 
-  const handleProfileClick = (event) => setAnchorEl(event.currentTarget);
+  const handleProfileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    fetchFacultyDetails();
+  };
+
   const handleProfileClose = () => setAnchorEl(null);
+
   const handleLogout = () => {
     handleProfileClose();
     navigate("/");
@@ -54,6 +61,17 @@ const NavbarFaculty = ({ children }) => {
 
   const handleLogoClick = () => {
     navigate("/faculty-dashboard");
+  };
+
+  const fetchFacultyDetails = async () => {
+    try {
+      // Ideally the facultyId should come from localStorage/session after login — I'm using 1 as placeholder
+      const facultyId = 1;
+      const response = await axios.get(`http://localhost:8080/faculty/${facultyId}`);
+      setFacultyDetails(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Faculty details:", error);
+    }
   };
 
   const drawer = (
@@ -94,7 +112,6 @@ const NavbarFaculty = ({ children }) => {
         }}
       >
         <Toolbar>
-          {/* Hamburger Icon - Left */}
           <IconButton
             color="inherit"
             edge="start"
@@ -121,13 +138,13 @@ const NavbarFaculty = ({ children }) => {
             <AccountCircleIcon fontSize="large" />
           </IconButton>
 
-          {/* Profile Dropdown */}
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleProfileClose}
-          >
-            <MenuItem disabled>Logged in as: Faculty</MenuItem>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleProfileClose}>
+            <MenuItem disabled>
+              Logged in as: {facultyDetails.userRole || "Faculty"}
+            </MenuItem>
+            <MenuItem disabled>
+              Email: {facultyDetails.facultyEmail || "faculty@example.com"}
+            </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
               <ExitToAppIcon fontSize="small" sx={{ mr: 1 }} />

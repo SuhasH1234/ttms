@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Container,
   TextField,
@@ -6,6 +7,12 @@ import {
   Button,
   Box,
   Paper,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import "./AddSection.css";
 
@@ -13,12 +20,75 @@ const AddSection = () => {
   const [section, setSection] = useState("");
   const [description, setDescription] = useState("");
   const [semester, setSemester] = useState("");
+  const [semesters, setSemesters] = useState([]);
 
-  const handleAddSection = () => {
-    // Handle your section add logic here (e.g., API call)
-    console.log("Section:", section);
-    console.log("Description:", description);
-    console.log("Semester:", semester);
+  // Snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const [faculty, setFaculty] = useState("");
+  const [faculties, setfaculties] = useState([]);
+
+  // Fetch semesters for dropdown
+  useEffect(() => {
+    const fetchSemesters = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/semester/all-semesters");
+        const semesterNames = response.data.map((sem) => sem.semName);
+        setSemesters(semesterNames);
+      } catch (error) {
+        console.error("Error fetching semesters:", error);
+        showSnackbar("Failed to fetch semesters.", "error");
+      }
+    };
+
+    const fetchFaculty = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/faculty/all-faculty");
+        const facultyNames = response.data.map((faculty) => faculty.facultyFirstName);
+        setfaculties(facultyNames);
+      } catch (error) {
+        console.error("Error fetching faculty:", error);
+        showSnackbar("Failed to fetch faculty.", "error");
+      }
+    };
+
+    fetchSemesters();
+    fetchFaculty();
+  }, []);
+
+  // Handle POST API for adding section
+  const handleAddSection = async () => {
+    const newSection = {
+      sectionName: section,
+      sectionDescription: description,
+      semName: semester,
+      facultyFirstName: faculty,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8080/section/create-section", newSection);
+      console.log("Section added successfully:", response.data);
+      showSnackbar("Section added successfully!", "success");
+      setSection("");
+      setDescription("");
+      setSemester("");
+      setFaculty("");
+    } catch (error) {
+      console.error("Error adding section:", error);
+      showSnackbar("Failed to add section.", "error");
+    }
+  };
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbarMsg(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -40,7 +110,7 @@ const AddSection = () => {
         >
           <TextField
             fullWidth
-            label="Enter section"
+            label="Enter Section"
             variant="outlined"
             margin="normal"
             value={section}
@@ -49,7 +119,7 @@ const AddSection = () => {
           />
           <TextField
             fullWidth
-            label="Enter section Description"
+            label="Enter Section Description"
             variant="outlined"
             margin="normal"
             multiline
@@ -58,15 +128,41 @@ const AddSection = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="input-field"
           />
-          <TextField
-            fullWidth
-            label="Enter Semester"
-            variant="outlined"
-            margin="normal"
-            value={semester}
-            onChange={(e) => setSemester(e.target.value)}
-            className="input-field"
-          />
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="semester-label">Select Semester</InputLabel>
+            <Select
+              labelId="semester-label"
+              value={semester}
+              onChange={(e) => setSemester(e.target.value)}
+              label="Select Semester"
+              className="input-field"
+            >
+              {semesters.map((semName, index) => (
+                <MenuItem key={index} value={semName}>
+                  {semName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="faculty-label">Select Faculty</InputLabel>
+            <Select
+              labelId="faculty-label"
+              value={faculty}
+              onChange={(e) => setFaculty(e.target.value)}
+              label="Select Faculty"
+              className="input-field"
+            >
+              {faculties.map((facultyFirstName, index) => (
+                <MenuItem key={index} value={facultyFirstName}>
+                  {facultyFirstName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <Box mt={3} textAlign="center">
             <Button
               variant="contained"
@@ -79,6 +175,22 @@ const AddSection = () => {
           </Box>
         </form>
       </Paper>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity={snackbarSeverity}
+          onClose={handleSnackbarClose}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMsg}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
