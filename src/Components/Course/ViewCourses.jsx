@@ -113,7 +113,7 @@ const ViewCourses = () => {
     <Container maxWidth="lg" className="course-container">
       <Paper className="course-paper" elevation={6}>
         <Typography variant="h4" className="course-title">
-          📚 All Courses
+          📚 All Course's
         </Typography>
         <Typography variant="subtitle1" className="course-subtitle">
           Manage, edit, and review available course offerings.
@@ -207,7 +207,6 @@ const ViewCourses = () => {
             onChange={handleChange}
             SelectProps={{ native: true }}
           >
-            <option value="">Select Semester</option>
             {semNames.map((name, idx) => (
               <option key={idx} value={name}>{name}</option>
             ))}

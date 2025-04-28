@@ -34,15 +34,15 @@ const drawerWidth = 240;
 const menuItems = [
   { text: "View Timetable", icon: <CalendarTodayIcon />, path: "/view-timetable" },
   { text: "Add Semester", icon: <GradeIcon />, path: "/add-semester" },
-  { text: "View Semester", icon: <GradeIcon />, path: "/view-semester" },
+  { text: "View Semester's", icon: <GradeIcon />, path: "/view-semester" },
   { text: "Add Course", icon: <LibraryBooksIcon />, path: "/add-course" },
-  { text: "View Courses", icon: <LibraryBooksIcon />, path: "/view-courses" },
+  { text: "View Course's", icon: <LibraryBooksIcon />, path: "/view-courses" },
   { text: "Add Section", icon: <GroupAddIcon />, path: "/add-section" },
-  { text: "View Section", icon: <GroupAddIcon />, path: "/view-sections" },
-  { text: "Register Teacher", icon: <SupervisorAccountIcon />, path: "/register-teacher" },
-  { text: "View Teachers", icon: <SupervisorAccountIcon />, path: "/view-teachers" },
+  { text: "View Section's", icon: <GroupAddIcon />, path: "/view-sections" },
+  { text: "Register Faculty's", icon: <SupervisorAccountIcon />, path: "/register-faculty" },
+  { text: "View Faculty's", icon: <SupervisorAccountIcon />, path: "/view-faculty" },
   { text: "Add Student", icon: <PeopleIcon />, path: "/add-student" },
-  { text: "View Students", icon: <PeopleIcon />, path: "/view-students" },
+  { text: "View Student's", icon: <PeopleIcon />, path: "/view-students" },
   { text: "Logout", icon: <ExitToAppIcon />, path: "/" },
 ];
 
