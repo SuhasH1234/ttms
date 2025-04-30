@@ -30,7 +30,7 @@ import "./Navbar.css";
 const drawerWidth = 240;
 
 const menuItems = [
-  { text: "Add Timetable", icon: <CalendarTodayIcon />, path: "/add-timetable-faculty" },
+  { text: "View Timetable", icon: <CalendarTodayIcon />, path: "/add-timetable-faculty" },
   { text: "Transfer Section", icon: <GradeIcon />, path: "/transfer-section-faculty"  },
   { text: "Deactivate Section", icon: <GradeIcon />, path: "/deactivate-section-faculty"  },
   { text: "Add Student", icon: <PeopleIcon />, path: "/add-student-faculty"  },
@@ -141,9 +141,6 @@ const NavbarFaculty = ({ children }) => {
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleProfileClose}>
             <MenuItem disabled>
               Logged in as: {facultyDetails.userRole || "Faculty"}
-            </MenuItem>
-            <MenuItem disabled>
-              Email: {facultyDetails.facultyEmail || "faculty@example.com"}
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>

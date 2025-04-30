@@ -15,11 +15,8 @@ import RegisterFaculty from "./Components/Faculty/RegisterFaculty";
 import ViewFaculty from "./Components/Faculty/ViewFaculty";
 import AddStudent from "./Components/Student/AddStudent";
 import ViewStudents from "./Components/Student/ViewStudents";
-import TransferSection from "./Components/Section/TransferSection";
-import DeactivateSections from "./Components/Section/DeactivateSections";
 import FacultyDashboard from "./Components/FacultyDashboard/FacultyDashboard";
 import StudentDashboard from "./Components/StudentDashboard/StudentDashboard";
-import AddTimetableFaculty from "./Components/Timetable/AddTimetableFaculty";
 import TransferSectionFaculty from "./Components/Section/TransferSectionFaculty";
 import NavbarFaculty from "./Components/Navbar/NavbarFaculty";
 import DeactivateSectionFaculty from "./Components/Section/DeactivateSectionFaculty";
@@ -27,6 +24,7 @@ import AddStudentFaculty from "./Components/Student/AddStudentFaculty";
 import ViewStudentsFaculty from "./Components/Student/ViewStudentsFaculty";
 import NavbarStudent from "./Components/Navbar/NavbarStudent";
 import ViewTimetableStudent from "./Components/Timetable/ViewTimetableStudent";
+import ViewTimetableFaculty from "./Components/Timetable/ViewTimetableFaculty";
 
 function App() {
   return (
@@ -117,22 +115,6 @@ function App() {
           }
         />
         <Route
-          path="/transfer-section"
-          element={
-            <Navbar>
-              <TransferSection />
-            </Navbar>
-          }
-        />
-        <Route
-          path="/deactivate-sections"
-          element={
-            <Navbar>
-              <DeactivateSections />
-            </Navbar>
-          }
-        />
-        <Route
           path="/register-faculty"
           element={
             <Navbar>
@@ -170,7 +152,7 @@ function App() {
           path="/add-timetable-faculty"
           element={
             <NavbarFaculty>
-              <AddTimetableFaculty />
+              <ViewTimetableFaculty />
             </NavbarFaculty>
           }
         />

@@ -208,6 +208,14 @@ body {
   color: #5e4ec8; /* Slightly darker shade on hover */
 }
 
+.add-btn:disabled {
+  color: none !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
 /* Media Query for Smaller Devices */
 @media (max-width: 768px) {
   .login-container {

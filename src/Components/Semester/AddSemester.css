@@ -57,6 +57,14 @@
   .add-btn:hover {
     background-color: #01579b !important;
   }
+
+  .add-btn:disabled {
+    color: none !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
   
   /* Animations */
   @keyframes fadeInUp {

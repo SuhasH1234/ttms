@@ -139,10 +139,7 @@ const NavbarStudent = ({ children }) => {
             onClose={handleProfileClose}
           >
             <MenuItem disabled>
-              Logged in as: {studentDetails.userRole || "Not available"}
-            </MenuItem>
-            <MenuItem disabled>
-              Email: {studentDetails.studentEmail || "Not available"}
+              Logged in as: {studentDetails.userRole || "Student"}
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>

@@ -52,7 +52,7 @@ const ViewSemester = () => {
 
   const handleDelete = async (sid) => {
     try {
-      await axios.delete(`http://localhost:8080/semester/semesters/${sid}`);
+      await axios.delete(`http://localhost:8080/semester/delete/${sid}`);
       setSemesters((prev) => prev.filter((sem) => sem.sid !== sid));
       showSnackbar("Semester deleted successfully", "success");
     } catch (error) {
@@ -118,39 +118,49 @@ const ViewSemester = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {semesters.map((semester, index) => (
-                <TableRow
-                  key={semester.sid}
-                  className={index % 2 === 0 ? "semester-row" : "semester-row-alt"}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{semester.semName}</TableCell>
-                  <TableCell>{semester.semDescription}</TableCell>
-                  <TableCell align="center">
-                    <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        className="action-btn update"
-                        startIcon={<EditIcon />}
-                        onClick={() => handleUpdateClick(semester)}
-                      >
-                        Update
-                      </Button>
-
-                      <Button
-                        variant="contained"
-                        size="small"
-                        className="action-btn delete"
-                        startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(semester.sid)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+              {semesters.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Semester's available
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                semesters.map((semester, index) => (
+                  <TableRow
+                    key={semester.sid}
+                    className={index % 2 === 0 ? "semester-row" : "semester-row-alt"}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{semester.semName}</TableCell>
+                    <TableCell>{semester.semDescription}</TableCell>
+                    <TableCell align="center">
+                      <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          className="action-btn update"
+                          startIcon={<EditIcon />}
+                          onClick={() => handleUpdateClick(semester)}
+                        >
+                          Update
+                        </Button>
+
+                        <Button
+                          variant="contained"
+                          size="small"
+                          className="action-btn delete"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(semester.sid)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Box>

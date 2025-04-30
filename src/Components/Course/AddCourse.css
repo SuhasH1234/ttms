@@ -110,6 +110,14 @@ body {
   box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
 }
 
+.add-btn:disabled {
+  color: none !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
   .add-course-paper {

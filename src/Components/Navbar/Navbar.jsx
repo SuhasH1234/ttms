@@ -148,9 +148,6 @@ const Navbar = ({ children }) => {
             <MenuItem disabled>
               Logged in as: {adminDetails.userRole || "Admin"}
             </MenuItem>
-            <MenuItem disabled>
-              Email: {adminDetails.adminEmail || "admin@example.com"}
-            </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
               <ExitToAppIcon fontSize="small" sx={{ mr: 1 }} />

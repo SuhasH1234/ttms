@@ -26,6 +26,8 @@ const LoginSign = () => {
         });
 
         if (response.status === 200) {
+          const token = response.data.split(" ")[1]; // Get the token from the response
+          localStorage.setItem("jwtToken", token); // Store the JWT token in localStorage
           setSnackbarMessage("Login successful");
           setSnackbarSeverity("success");
           setOpenSnackbar(true);
@@ -47,6 +49,8 @@ const LoginSign = () => {
         });
 
         if (response.status === 200) {
+          const token = response.data.split(" ")[1]; // Get the token from the response
+          localStorage.setItem("jwtToken", token); // Store the JWT token in localStorage
           setSnackbarMessage("Login successful");
           setSnackbarSeverity("success");
           setOpenSnackbar(true);
@@ -68,6 +72,8 @@ const LoginSign = () => {
         });
 
         if (response.status === 200) {
+          const token = response.data.split(" ")[1]; // Get the token from the response
+          localStorage.setItem("jwtToken", token); // Store the JWT token in localStorage
           setSnackbarMessage("Login successful");
           setSnackbarSeverity("success");
           setOpenSnackbar(true);

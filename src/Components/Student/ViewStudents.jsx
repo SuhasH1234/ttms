@@ -63,7 +63,6 @@ const ViewStudents = () => {
   };
 
   const handleUpdate = async () => {
-
     try {
       await axios.put("http://localhost:8080/student/update-student", selectedStudent);
       fetchStudents();
@@ -85,10 +84,6 @@ const ViewStudents = () => {
       showSnackbar("Failed to delete student.", "error");
     }
   };
-
-  // const handleTimetable = (name) => {
-  //   alert(`Upload timetable for: ${name}`);
-  // };
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbarMsg(message);
@@ -127,44 +122,54 @@ const ViewStudents = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {students.map((student, index) => (
-                <TableRow
-                  key={student.studentid}
-                  className={index % 2 === 0 ? "student-row" : "student-row-alt"}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{student.studentFirstName}</TableCell>
-                  <TableCell>{student.studentLastName}</TableCell>
-                  <TableCell>{student.studentEmail}</TableCell>
-                  <TableCell>{student.studentPassword}</TableCell>
-                  <TableCell>{student.studentContactNo}</TableCell>
-                  <TableCell>{student.studentAddress}</TableCell>
-                  <TableCell>{student.studentSemester}</TableCell>
-                  <TableCell>{student.studentSection}</TableCell>
-                  <TableCell align="center">
-                    <Box display="flex" justifyContent="center" gap={1}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<EditIcon />}
-                        className="action-btn update"
-                        onClick={() => handleOpenModal(student)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<DeleteIcon />}
-                        className="action-btn delete"
-                        onClick={() => handleDelete(student.studentid)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+              {students.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Student's available
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                students.map((student, index) => (
+                  <TableRow
+                    key={student.studentid}
+                    className={index % 2 === 0 ? "student-row" : "student-row-alt"}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{student.studentFirstName}</TableCell>
+                    <TableCell>{student.studentLastName}</TableCell>
+                    <TableCell>{student.studentEmail}</TableCell>
+                    <TableCell>{student.studentPassword}</TableCell>
+                    <TableCell>{student.studentContactNo}</TableCell>
+                    <TableCell>{student.studentAddress}</TableCell>
+                    <TableCell>{student.studentSemester}</TableCell>
+                    <TableCell>{student.studentSection}</TableCell>
+                    <TableCell align="center">
+                      <Box display="flex" justifyContent="center" gap={1}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<EditIcon />}
+                          className="action-btn update"
+                          onClick={() => handleOpenModal(student)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<DeleteIcon />}
+                          className="action-btn delete"
+                          onClick={() => handleDelete(student.studentid)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Box>
@@ -227,7 +232,7 @@ const ViewStudents = () => {
           />
           <TextField
             fullWidth
-            label="Addres"
+            label="Address"
             name="studentAddress"
             margin="normal"
             value={selectedStudent.studentAddress}

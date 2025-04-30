@@ -109,6 +109,14 @@ body {
   box-shadow: 0 6px 14px rgba(91, 65, 214, 0.4);
 }
 
+.add-btn:disabled {
+  color: none !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {
