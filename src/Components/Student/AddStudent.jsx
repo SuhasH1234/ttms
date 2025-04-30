@@ -14,8 +14,11 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  TableRow,
+  TableCell
 } from "@mui/material";
 import "./AddStudent.css";
+import {isValidEmail,isValidContact} from "../InputValidation/InputValidation"
 
 const AddStudent = () => {
   const [firstname, setFirstName] = useState("");
@@ -102,6 +105,12 @@ const AddStudent = () => {
     setSnackbarOpen(false);
   };
 
+  const isFormValid = 
+    firstname !== "" && lastname !== "" &&
+    isValidEmail(email) && password !== "" &&
+    isValidContact(contact) && address !== "" &&
+    semester!== "" && section!== "";
+
   return (
     <Container maxWidth="sm" className="register-student-container">
       <Paper elevation={6} className="register-student-paper">
@@ -151,16 +160,24 @@ const AddStudent = () => {
           {/* Email and Password */}
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Email ID"
-                variant="outlined"
-                margin="normal"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="input-field"
-              />
+            <TextField
+              fullWidth
+              required
+              type="email"
+              label="Email ID"
+              variant="outlined"
+              margin="normal"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+              error={email !== "" && !isValidEmail(email)}
+              helperText={
+                email !== "" && !isValidEmail(email)
+                ? "Enter a valid email address"
+                : ""
+              }
+            />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -180,16 +197,22 @@ const AddStudent = () => {
           {/* Contact No and Address */}
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Contact No"
-                variant="outlined"
-                margin="normal"
-                name="contactNo"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                className="input-field"
-              />
+            <TextField
+              fullWidth
+              label="Contact No"
+              variant="outlined"
+              margin="normal"
+              name="contactNo"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              className="input-field"
+              error={contact !== "" && !isValidContact(contact)}
+              helperText={
+                contact !== "" && !isValidContact(contact)
+                ? "Contact number must be 10 digits"
+                : ""
+              }
+            />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -215,11 +238,21 @@ const AddStudent = () => {
               label="Select Semester"
               className="input-field"
             >
-              {semesters.map((sem, index) => (
-                <MenuItem key={index} value={sem.semName}>
-                  {sem.semName} {/* Render the semName here */}
-                </MenuItem>
-              ))}
+              {semesters.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Semester's available
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                semesters.map((sem, index) => (
+                  <MenuItem key={index} value={sem.semName}>
+                    {sem.semName} {/* Render the semName here */}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </FormControl>
 
@@ -231,11 +264,21 @@ const AddStudent = () => {
               onChange={(e) => setSection(e.target.value)}
               label="Select Section"
             >
-              {sections.map((sec, index) => (
-                <MenuItem key={index} value={sec.sectionName}>
-                  {sec.sectionName}
-                </MenuItem>
-              ))}
+              {sections.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Section's available
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                sections.map((sec, index) => (
+                  <MenuItem key={index} value={sec.sectionName}>
+                    {sec.sectionName}
+                  </MenuItem>
+                ))
+                )}
             </Select>
           </FormControl>
 
@@ -245,6 +288,7 @@ const AddStudent = () => {
               color="primary"
               type="submit"
               className="register-btn"
+              disabled={!isFormValid}
             >
               Register Student
             </Button>

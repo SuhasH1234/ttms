@@ -13,6 +13,8 @@ import {
   FormControl,
   Snackbar,
   Alert,
+  TableRow,
+  TableCell
 } from "@mui/material";
 import "./AddSection.css";
 
@@ -91,6 +93,9 @@ const AddSection = () => {
     setSnackbarOpen(false);
   };
 
+  // ✅ Form validation — returns true if both fields are filled
+  const isFormValid = section !== "" && description!== "" && semester!== "" && faculty!== "";
+
   return (
     <Container maxWidth="sm" className="add-section-container">
       <Paper elevation={6} className="add-section-paper">
@@ -98,7 +103,7 @@ const AddSection = () => {
           🎓 Add New Section
         </Typography>
         <Typography variant="subtitle1" className="form-subtitle">
-          Plan your academic year with ease!
+          Plan your academic Section with ease!
         </Typography>
         <form
           noValidate
@@ -119,7 +124,7 @@ const AddSection = () => {
           />
           <TextField
             fullWidth
-            label="Enter Section Description"
+            label="Enter No. of Students"
             variant="outlined"
             margin="normal"
             multiline
@@ -138,11 +143,21 @@ const AddSection = () => {
               label="Select Semester"
               className="input-field"
             >
-              {semesters.map((semName, index) => (
-                <MenuItem key={index} value={semName}>
-                  {semName}
-                </MenuItem>
-              ))}
+              {semesters.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Semester's available
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                semesters.map((semName, index) => (
+                  <MenuItem key={index} value={semName}>
+                    {semName}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </FormControl>
 
@@ -155,11 +170,21 @@ const AddSection = () => {
               label="Select Faculty"
               className="input-field"
             >
-              {faculties.map((facultyFirstName, index) => (
-                <MenuItem key={index} value={facultyFirstName}>
-                  {facultyFirstName}
-                </MenuItem>
-              ))}
+              {faculties.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Faculty's available
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                faculties.map((facultyFirstName, index) => (
+                  <MenuItem key={index} value={facultyFirstName}>
+                    {facultyFirstName}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </FormControl>
 
@@ -169,6 +194,7 @@ const AddSection = () => {
               color="secondary"
               type="submit"
               className="add-btn"
+              disabled={!isFormValid}
             >
               Add Section
             </Button>

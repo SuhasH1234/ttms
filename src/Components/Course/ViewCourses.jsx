@@ -90,7 +90,7 @@ const ViewCourses = () => {
 
   const handleDelete = async (cid) => {
     try {
-      await axios.delete(`http://localhost:8080/course/courses/${cid}`);
+      await axios.delete(`http://localhost:8080/course/delete/${cid}`);
       fetchCourses();
       showSnackbar("Course deleted successfully!", "success");
     } catch (error) {
@@ -131,36 +131,46 @@ const ViewCourses = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {courses.map((course, index) => (
-                <TableRow key={course.cid} className={index % 2 === 0 ? "course-row" : "course-row-alt"}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{course.courseName}</TableCell>
-                  <TableCell>{course.courseDescription}</TableCell>
-                  <TableCell>{course.semName}</TableCell>
-                  <TableCell align="center">
-                    <Box display="flex" justifyContent="center" gap={1}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<EditIcon />}
-                        className="action-btn update"
-                        onClick={() => handleOpenModal(course)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<DeleteIcon />}
-                        className="action-btn delete"
-                        onClick={() => handleDelete(course.cid)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+              {courses.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Courses's present
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                courses.map((course, index) => (
+                  <TableRow key={course.cid} className={index % 2 === 0 ? "course-row" : "course-row-alt"}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{course.courseName}</TableCell>
+                    <TableCell>{course.courseDescription}</TableCell>
+                    <TableCell>{course.semName}</TableCell>
+                    <TableCell align="center">
+                      <Box display="flex" justifyContent="center" gap={1}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<EditIcon />}
+                          className="action-btn update"
+                          onClick={() => handleOpenModal(course)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<DeleteIcon />}
+                          className="action-btn delete"
+                          onClick={() => handleDelete(course.cid)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Box>

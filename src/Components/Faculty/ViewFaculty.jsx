@@ -131,40 +131,50 @@ const ViewFaculty = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {teachers.map((teacher, index) => (
-                <TableRow
-                  key={teacher.facultyid}
-                  className={index % 2 === 0 ? "teacher-row" : "teacher-row-alt"}
-                >
-                  <TableCell>{teacher.facultyFirstName}</TableCell>
-                  <TableCell>{teacher.facultyLastName}</TableCell>
-                  <TableCell>{teacher.facultyEmail}</TableCell>
-                  <TableCell>{teacher.facultyContact}</TableCell>
-                  <TableCell>{teacher.facultyAddress}</TableCell>
-                  <TableCell align="center">
-                    <Box display="flex" justifyContent="center" gap={1}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<EditIcon />}
-                        className="action-btn update"
-                        onClick={() => handleUpdateClick(teacher)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<DeleteIcon />}
-                        className="action-btn delete"
-                        onClick={() => handleDelete(teacher.facultyid)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+              {teachers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Faculty's available
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                teachers.map((teacher, index) => (
+                  <TableRow
+                    key={teacher.facultyid}
+                    className={index % 2 === 0 ? "teacher-row" : "teacher-row-alt"}
+                  >
+                    <TableCell>{teacher.facultyFirstName}</TableCell>
+                    <TableCell>{teacher.facultyLastName}</TableCell>
+                    <TableCell>{teacher.facultyEmail}</TableCell>
+                    <TableCell>{teacher.facultyContact}</TableCell>
+                    <TableCell>{teacher.facultyAddress}</TableCell>
+                    <TableCell align="center">
+                      <Box display="flex" justifyContent="center" gap={1}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<EditIcon />}
+                          className="action-btn update"
+                          onClick={() => handleUpdateClick(teacher)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<DeleteIcon />}
+                          className="action-btn delete"
+                          onClick={() => handleDelete(teacher.facultyid)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Box>

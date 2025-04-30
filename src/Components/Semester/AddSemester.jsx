@@ -7,7 +7,11 @@ import {
   Box,
   Paper,
   Snackbar,
-  Alert
+  Alert,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
 } from "@mui/material";
 import "./AddSemester.css";
 import axios from "axios";
@@ -38,6 +42,9 @@ const AddSemester = () => {
     }
   };
 
+  // ✅ Form validation — returns true if both fields are filled
+  const isFormValid = semester !== "" && description.trim() !== "";
+
   return (
     <>
       <Container maxWidth="sm" className="add-semester-container">
@@ -46,18 +53,26 @@ const AddSemester = () => {
             🎓 Add New Semester
           </Typography>
           <Typography variant="subtitle1" className="form-subtitle">
-            Plan your academic year with ease!
+            Plan your academic Semester with ease!
           </Typography>
           <form noValidate autoComplete="off">
-            <TextField
-              fullWidth
-              label="Enter Semester"
-              variant="outlined"
-              margin="normal"
-              value={semester}
-              onChange={(e) => setSemester(e.target.value)}
-              className="input-field"
-            />
+
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Select Semester</InputLabel>
+              <Select
+                required
+                value={semester}
+                onChange={(e) => setSemester(e.target.value)}
+                label="Select Semester"
+              >
+                {[...Array(8)].map((_, index) => (
+                  <MenuItem key={index + 1} value={`B Tech Semester ${index + 1}`}>
+                    B Tech Semester {index + 1}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <TextField
               fullWidth
               label="Enter Semester Description"
@@ -69,12 +84,14 @@ const AddSemester = () => {
               onChange={(e) => setDescription(e.target.value)}
               className="input-field"
             />
+
             <Box mt={3} textAlign="center">
               <Button
                 variant="contained"
                 color="secondary"
                 onClick={handleAddSemester}
                 className="add-btn"
+                disabled={!isFormValid}
               >
                 Add Semester
               </Button>

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import "./RegisterFaculty.css";
+import {isValidEmail,isValidContact} from "../InputValidation/InputValidation"
 
 const RegisterTeacher = () => {
   const [formData, setFormData] = useState({
@@ -80,6 +81,15 @@ const RegisterTeacher = () => {
     }
   };
 
+  const isFormValid =
+    formData.firstname !== "" &&
+    formData.lastname !== "" &&
+    isValidEmail(formData.email) &&
+    formData.password !== "" &&
+    isValidContact(formData.contactNo) &&
+    formData.address !== "";
+
+
   return (
     <>
       <Container maxWidth="sm" className="register-teacher-container">
@@ -96,6 +106,7 @@ const RegisterTeacher = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="First Name"
                   variant="outlined"
                   margin="normal"
@@ -108,6 +119,7 @@ const RegisterTeacher = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Last Name"
                   variant="outlined"
                   margin="normal"
@@ -122,16 +134,24 @@ const RegisterTeacher = () => {
             {/* Email and Password */}
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Email ID"
-                  variant="outlined"
-                  margin="normal"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="input-field"
-                />
+              <TextField
+                fullWidth
+                required
+                type="email"
+                label="Email ID"
+                variant="outlined"
+                margin="normal"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input-field"
+                error={formData.email !== "" && !isValidEmail(formData.email)}
+                helperText={
+                  formData.email !== "" && !isValidEmail(formData.email)
+                    ? "Enter a valid email address"
+                    : ""
+                }
+              />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -151,16 +171,22 @@ const RegisterTeacher = () => {
             {/* Contact No and Address */}
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Contact No"
-                  variant="outlined"
-                  margin="normal"
-                  name="contactNo"
-                  value={formData.contactNo}
-                  onChange={handleChange}
-                  className="input-field"
-                />
+              <TextField
+                fullWidth
+                label="Contact No"
+                variant="outlined"
+                margin="normal"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+                className="input-field"
+                error={formData.contactNo !== "" && !isValidContact(formData.contactNo)}
+                helperText={
+                  formData.contactNo !== "" && !isValidContact(formData.contactNo)
+                    ? "Contact number must be 10 digits"
+                    : ""
+                }
+              />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -182,6 +208,7 @@ const RegisterTeacher = () => {
                 color="primary"
                 onClick={handleRegister}
                 className="register-btn"
+                disabled={!isFormValid}
               >
                 Register Teacher
               </Button>

@@ -141,7 +141,7 @@ const ViewSections = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/section/sections/${id}`);
+      await axios.delete(`http://localhost:8080/section/delete/${id}`);
       fetchSections();
       showSnackbar("Section deleted successfully!", "success");
     } catch (error) {
@@ -236,48 +236,58 @@ const ViewSections = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sections.map((section, index) => (
-                <TableRow key={section.secid} className={index % 2 === 0 ? "section-row" : "section-row-alt"}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{section.sectionName}</TableCell>
-                  <TableCell>{section.sectionDescription}</TableCell>
-                  <TableCell>{section.semName}</TableCell>
-                  <TableCell>{section.facultyFirstName}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      startIcon={<AddIcon />}
-                      className="action-btn upload"
-                      onClick={() => handleOpenttModal(section)}
-                    >
-                      Add Timetable
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<EditIcon />}
-                        className="action-btn update"
-                        onClick={() => handleOpenModal(section)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        startIcon={<DeleteIcon />}
-                        className="action-btn delete"
-                        onClick={() => handleDelete(section.secid)}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
+              {sections.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Section's available
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                sections.map((section, index) => (
+                  <TableRow key={section.secid} className={index % 2 === 0 ? "section-row" : "section-row-alt"}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{section.sectionName}</TableCell>
+                    <TableCell>{section.sectionDescription}</TableCell>
+                    <TableCell>{section.semName}</TableCell>
+                    <TableCell>{section.facultyFirstName}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<AddIcon />}
+                        className="action-btn upload"
+                        onClick={() => handleOpenttModal(section)}
+                      >
+                        Add Timetable
+                      </Button>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<EditIcon />}
+                          className="action-btn update"
+                          onClick={() => handleOpenModal(section)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<DeleteIcon />}
+                          className="action-btn delete"
+                          onClick={() => handleDelete(section.secid)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Box>

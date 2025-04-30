@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import Timetable from "./Timetable";
+import "./Timetable.css";
 
-export default class ViewTimetableStudent extends Component {
-  render() {
-    return (
-      <div>ViewTimetableStudent</div>
-    )
-  }
-}
+const ViewTimetableStudent= () => {
+  return (
+    <Timetable />
+  );
+};
+
+export default ViewTimetableStudent;

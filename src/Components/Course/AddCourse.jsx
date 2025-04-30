@@ -13,6 +13,8 @@ import {
   FormControl,
   Snackbar,
   Alert,
+  TableRow,
+  TableCell
 } from "@mui/material";
 import "./AddCourse.css";
 
@@ -72,6 +74,9 @@ const AddCourse = () => {
     setSnackbarOpen(false);
   };
 
+  // ✅ Form validation — returns true if both fields are filled
+  const isFormValid = course !== "" && description!== "" && semester!== "";
+
   return (
     <Container maxWidth="sm" className="add-course-container">
       <Paper elevation={6} className="add-course-paper">
@@ -79,7 +84,7 @@ const AddCourse = () => {
           🎓 Add New Course
         </Typography>
         <Typography variant="subtitle1" className="form-subtitle">
-          Plan your academic year with ease!
+          Plan your academic Course with ease!
         </Typography>
         <form
           noValidate
@@ -118,11 +123,21 @@ const AddCourse = () => {
               label="Select Semester"
               className="input-field"
             >
-              {semesters.map((semName, index) => (
-                <MenuItem key={index} value={semName}>
-                  {semName}
-                </MenuItem>
-              ))}
+              {semesters.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} align="center">
+                    <Typography variant="h6" color="textSecondary">
+                      No Semester's present
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                semesters.map((semName, index) => (
+                  <MenuItem key={index} value={semName}>
+                    {semName}
+                  </MenuItem>
+                ))
+              )}
             </Select>
           </FormControl>
 
@@ -132,6 +147,7 @@ const AddCourse = () => {
               color="secondary"
               type="submit"
               className="add-btn"
+              disabled={!isFormValid}
             >
               Add Course
             </Button>
