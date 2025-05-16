@@ -49,7 +49,6 @@
   /* Button styling */
   .register-btn {
     background-color: #0288d1 !important;
-    color: white;
     font-weight: bold;
     padding: 10px 24px;
     font-size: 16px;
@@ -62,8 +61,8 @@
     background-color: #01579b !important;
   }
 
-  .add-btn:disabled {
-    color: none !important;
+  .register-btn:disabled {
+    color: white !important;
     cursor: not-allowed !important;
     box-shadow: none !important;
     animation: none !important;

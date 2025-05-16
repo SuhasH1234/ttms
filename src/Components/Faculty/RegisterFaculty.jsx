@@ -210,7 +210,7 @@ const RegisterTeacher = () => {
                 className="register-btn"
                 disabled={!isFormValid}
               >
-                Register Teacher
+                Register Faculty
               </Button>
             </Box>
           </form>
