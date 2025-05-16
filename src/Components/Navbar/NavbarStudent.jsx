@@ -120,9 +120,8 @@ const NavbarStudent = ({ children }) => {
 
           <Box sx={{ flexGrow: 1, textAlign: "center" }}>
             <Typography
-              variant="h6"
               component="div"
-              sx={{ fontWeight: 600 }}
+              sx={{ fontWeight: 600, color: 'white', fontSize: '20px' }}
               onClick={handleLogoClick}
             >
               Student Dashboard

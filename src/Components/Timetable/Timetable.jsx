@@ -107,9 +107,9 @@ const Timetable = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
-        <Typography variant="h4" gutterBottom className="timetable-title" sx={{color: '#4f46e5'}}>
+      <Typography variant="h4" className="timetable-title" sx={{color: '#4f46e5', fontSize: '28px', fontWeight: '700', textAlign: 'center', marginBottom: '20px'}}>
           📋 View Timetable
-        </Typography>
+      </Typography>
 
         <Box
           sx={{

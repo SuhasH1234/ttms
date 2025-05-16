@@ -98,7 +98,7 @@ const RegisterTeacher = () => {
             🎓 Register New Faculty
           </Typography>
           <Typography variant="subtitle1" className="form-subtitle">
-            Fill in the details to register a new teacher
+            Fill in the details to register a new faculty
           </Typography>
           <form noValidate autoComplete="off">
             {/* First Name and Last Name */}

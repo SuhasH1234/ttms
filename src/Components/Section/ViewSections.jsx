@@ -217,10 +217,12 @@ const ViewSections = () => {
   return (
     <Container maxWidth="lg" className="section-container">
       <Paper className="section-paper" elevation={6}>
-        <Typography variant="h4" className="section-title">🧾 All Sections</Typography>
-        <Typography variant="subtitle1" className="section-subtitle">
-          List of available sections with uploadable timetables
-        </Typography>
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h4" className="section-title">🧾 All Section's</Typography>
+          <Typography variant="subtitle1" className="course-subtitle">
+            Manage, edit, and review available section offerings.
+          </Typography>
+        </Box>
 
         <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="section-table">

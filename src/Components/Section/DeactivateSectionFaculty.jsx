@@ -60,7 +60,12 @@ const DeactivateSectionFaculty = () => {
   return (
     <Container maxWidth="lg" className="section-container">
       <Paper className="section-paper" elevation={6}>
-        <Typography variant="h4" className="section-title">🧾 Deactivate Sections</Typography>
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h4" className="section-title">🧾 Deactivate Sections</Typography>
+          <Typography variant="subtitle1" className="course-subtitle">
+            Deactivate the available section offerings.
+          </Typography>
+        </Box>
 
         <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="section-table">

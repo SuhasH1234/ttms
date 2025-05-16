@@ -86,10 +86,6 @@ const ViewStudentsFaculty = () => {
     }
   };
 
-  // const handleTimetable = (name) => {
-  //   alert(`Upload timetable for: ${name}`);
-  // };
-
   const showSnackbar = (message, severity = "success") => {
     setSnackbarMsg(message);
     setSnackbarSeverity(severity);
@@ -103,12 +99,14 @@ const ViewStudentsFaculty = () => {
   return (
     <Container maxWidth="lg" className="student-container">
       <Paper className="student-paper" elevation={6}>
-        <Typography variant="h4" className="student-title">
-          📘 All Students
-        </Typography>
-        <Typography variant="subtitle1" className="student-subtitle">
-          List of registered students
-        </Typography>
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h4" className="student-title">
+            📘 All Students
+          </Typography>
+          <Typography variant="subtitle1" className="course-subtitle">
+            Manage, edit, and review available student offerings.
+          </Typography>
+        </Box>
 
         <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="student-table">

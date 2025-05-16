@@ -35,19 +35,30 @@ body {
 
 /* Title Styling */
 .student-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #4f46e5;
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: var(--primary) !important;
+  margin-bottom: 1.5rem !important;
+  text-align: center !important;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
-/* Subtitle Styling */
+.student-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
 .student-subtitle {
-  font-size: 1rem;
-  text-align: center;
-  color: #666;
-  margin-bottom: 20px;
+  color: #6b7280;
 }
 
 /* Table Styling */
@@ -60,8 +71,8 @@ body {
 /* Table Header */
 .student-header th,
 .student-header td {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: #4F46E5;
+  color: white;
   font-size: 14px;
   text-transform: uppercase;
   padding: 12px 10px;
