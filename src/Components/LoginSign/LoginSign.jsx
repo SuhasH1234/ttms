@@ -95,7 +95,7 @@ const LoginSign = () => {
         open={openSnackbar}
         autoHideDuration={10000}
         onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: 'center' }}
       >
         <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
           {snackbarMessage}
@@ -113,9 +113,14 @@ const LoginSign = () => {
 
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{ marginBottom: "18px", borderRadius: '12px' }}>
               <InputLabel>User Role</InputLabel>
-              <Select value={role} label="User Role" onChange={(e) => setRole(e.target.value)} required>
+              <Select
+                value={role}
+                label="User Role"
+                onChange={(e) => setRole(e.target.value)}
+                required
+              >
                 <MenuItem value="student">Student</MenuItem>
                 <MenuItem value="faculty">Faculty</MenuItem>
                 <MenuItem value="admin">Admin</MenuItem>

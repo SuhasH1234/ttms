@@ -13,7 +13,7 @@ import {
   Modal,
   TextField,
   Snackbar,
-  Alert
+  Alert,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,11 +28,16 @@ const ViewCourses = () => {
     cid: "",
     courseName: "",
     courseDescription: "",
-    semName: ""
+    semName: "",
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  useEffect(() => {
+    fetchCourses();
+    fetchSemesters();
+  }, []);
 
   const fetchCourses = async () => {
     try {
@@ -46,26 +51,18 @@ const ViewCourses = () => {
   const fetchSemesters = async () => {
     try {
       const response = await axios.get("http://localhost:8080/semester/all-semesters");
-      const semesterNames = response.data.map(sem => sem.semName);
-      setSemNames(semesterNames);
+      setSemNames(response.data.map((sem) => sem.semName));
     } catch (error) {
       console.error("Error fetching semesters:", error);
     }
   };
-
-  useEffect(() => {
-    fetchCourses();
-    fetchSemesters();
-  }, []);
 
   const handleOpenModal = (course) => {
     setSelectedCourse(course);
     setOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
+  const handleCloseModal = () => setOpen(false);
 
   const handleChange = (e) => {
     setSelectedCourse({ ...selectedCourse, [e.target.name]: e.target.value });
@@ -73,10 +70,9 @@ const ViewCourses = () => {
 
   const handleUpdate = async () => {
     if (!semNames.includes(selectedCourse.semName)) {
-      showSnackbar("Invalid semester name. Please select a valid one.", "error");
+      showSnackbar("Invalid semester name.", "error");
       return;
     }
-
     try {
       await axios.put("http://localhost:8080/course/update-course", selectedCourse);
       fetchCourses();
@@ -99,131 +95,128 @@ const ViewCourses = () => {
     }
   };
 
-  const showSnackbar = (message, severity = "success") => {
-    setSnackbarMsg(message);
+  const showSnackbar = (msg, severity = "success") => {
+    setSnackbarMsg(msg);
     setSnackbarSeverity(severity);
     setSnackbarOpen(true);
   };
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
   return (
-    <Container maxWidth="lg" className="course-container">
-      <Paper className="course-paper" elevation={6}>
-        <Typography variant="h4" className="course-title">
-          📚 All Course's
-        </Typography>
-        <Typography variant="subtitle1" className="course-subtitle">
-          Manage, edit, and review available course offerings.
-        </Typography>
+    <div className="view-courses-wrapper">
+      <Container maxWidth="md" className="course-container">
+        <Paper className="course-paper" elevation={4}>
+          <Box textAlign="center" mb={3}>
+            <Typography variant="h4" className="course-title">
+              📚 All Course's
+            </Typography>
+            <Typography variant="subtitle1" className="course-subtitle">
+              Manage, edit, and review available course offerings.
+            </Typography>
+          </Box>
 
-        <Box sx={{ overflowX: "auto", marginTop: 2 }}>
-          <Table className="course-table">
-            <TableHead>
-              <TableRow className="course-header">
-                <TableCell><strong>ID</strong></TableCell>
-                <TableCell><strong>Name</strong></TableCell>
-                <TableCell><strong>Description</strong></TableCell>
-                <TableCell><strong>Semester</strong></TableCell>
-                <TableCell align="center"><strong>Actions</strong></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {courses.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={10} align="center">
-                    <Typography variant="h6" color="textSecondary">
-                      No Courses's present
-                    </Typography>
-                  </TableCell>
+          <Box sx={{ overflowX: "auto" }}>
+            <Table className="course-table">
+              <TableHead>
+                <TableRow className="course-header">
+                  <TableCell>ID</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Semester</TableCell>
+                  <TableCell align="center">Actions</TableCell>
                 </TableRow>
-              ) : (
-                courses.map((course, index) => (
-                  <TableRow key={course.cid} className={index % 2 === 0 ? "course-row" : "course-row-alt"}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{course.courseName}</TableCell>
-                    <TableCell>{course.courseDescription}</TableCell>
-                    <TableCell>{course.semName}</TableCell>
-                    <TableCell align="center">
-                      <Box display="flex" justifyContent="center" gap={1}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          startIcon={<EditIcon />}
-                          className="action-btn update"
-                          onClick={() => handleOpenModal(course)}
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          startIcon={<DeleteIcon />}
-                          className="action-btn delete"
-                          onClick={() => handleDelete(course.cid)}
-                        >
-                          Delete
-                        </Button>
-                      </Box>
+              </TableHead>
+              <TableBody>
+                {courses.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      <Typography variant="h6" color="textSecondary">
+                        No courses available
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </Box>
-      </Paper>
+                ) : (
+                  courses.map((course, index) => (
+                    <TableRow
+                      key={course.cid}
+                      className={index % 2 === 0 ? "course-row" : "course-row-alt"}
+                    >
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{course.courseName}</TableCell>
+                      <TableCell>{course.courseDescription}</TableCell>
+                      <TableCell>{course.semName}</TableCell>
+                      <TableCell align="center">
+                        <Box display="flex" justifyContent="center" gap={1}>
+                          <Button
+                            size="small"
+                            startIcon={<EditIcon />}
+                            className="action-btn update"
+                            onClick={() => handleOpenModal(course)}
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="small"
+                            startIcon={<DeleteIcon />}
+                            className="action-btn delete"
+                            onClick={() => handleDelete(course.cid)}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </Box>
+        </Paper>
+      </Container>
 
       <Modal open={open} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2
-          }}
-        >
-          <Typography variant="h6" sx={{color: 'black', fontWeight: 'bold'}} mb={4}>Update Course</Typography>
+        <Box className="modal-box">
+          <Typography variant="h6" fontWeight="bold" mb={2}>
+            Update Course
+          </Typography>
           <TextField
             fullWidth
             label="Name"
             name="courseName"
-            margin="normal"
             value={selectedCourse.courseName}
             onChange={handleChange}
+            margin="normal"
           />
           <TextField
             fullWidth
             label="Description"
             name="courseDescription"
-            margin="normal"
             value={selectedCourse.courseDescription}
             onChange={handleChange}
+            margin="normal"
           />
           <TextField
             select
             fullWidth
             label="Semester"
             name="semName"
-            margin="normal"
             value={selectedCourse.semName}
             onChange={handleChange}
+            margin="normal"
             SelectProps={{ native: true }}
           >
             {semNames.map((name, idx) => (
-              <option key={idx} value={name}>{name}</option>
+              <option key={idx} value={name}>
+                {name}
+              </option>
             ))}
           </TextField>
-          <Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
-            <Button sx={{ backgroundColor: '#4f46e5', color: '#ffffff' }} onClick={handleCloseModal}>Cancel</Button>
-            <Button sx={{ backgroundColor: '#4f46e5', color: '#ffffff' }} variant="contained" onClick={handleUpdate}>Save</Button>
+          <Box mt={3} display="flex" justifyContent="flex-end" gap={1}>
+            <Button variant="outlined" onClick={handleCloseModal}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={handleUpdate}>
+              Save
+            </Button>
           </Box>
         </Box>
       </Modal>
@@ -231,14 +224,14 @@ const ViewCourses = () => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
-        onClose={handleSnackbarClose}
+        onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert severity={snackbarSeverity} onClose={handleSnackbarClose} sx={{ width: "100%" }}>
+        <Alert severity={snackbarSeverity} onClose={() => setSnackbarOpen(false)}>
           {snackbarMsg}
         </Alert>
       </Snackbar>
-    </Container>
+    </div>
   );
 };
 

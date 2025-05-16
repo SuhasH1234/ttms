@@ -1,4 +1,3 @@
-/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,239 +5,162 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif; /* Modern font for the overall design */
-  background-color: #f9f9f9;
-  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevents any overflow */
+  overflow-x: hidden;
 }
 
-/* Container for the login form and video */
 .login-container {
   display: flex;
-  height: 100%;
-  width: 100%;
-  max-width: 1240px;
-  border-radius: 16px;
+  flex-wrap: wrap;
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transform: scale(1);
-  animation: fadeIn 1s ease-out; /* Smooth fade-in animation */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.9s ease;
 }
 
 .login-left {
   flex: 1;
+  min-width: 350px;
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  overflow: hidden;
 }
 
-.login-left video {
-  position: absolute;
-  top: 0;
-  left: 0;
+.login-left img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
-  opacity: 0.7; /* Slightly faded to keep focus on the form */
 }
 
 .login-right {
   flex: 1;
-  /* padding: 40px; */
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #fff;
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
-  position: relative;
-  color: #333;
-  z-index: 1;
-  transform: translateY(20px);
-  animation: slideInRight 1s ease-out; /* Slide-in animation for the form */
+  padding: 40px 30px;
+  background: #ffffff;
+  animation: slideInRight 0.9s ease;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes slideInRight {
-  0% { transform: translateY(30px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-/* Form Box Styling */
 .form-box {
   width: 100%;
-  max-width: 400px;
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.9); /* Light background */
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 450px;
+  background: #f7f9fc;
+  padding: 50px 35px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
   text-align: center;
-  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
 }
 
 .form-box:hover {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* More prominent shadow on hover */
-  transform: translateY(-10px); /* Slight lift effect */
+  transform: translateY(-4px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+  transition: 0.3s ease;
 }
 
-/* Title Styling */
 .title {
-  font-size: 34px;
-  color: #6c5ce7; /* Updated accent color */
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
+  color: #2575fc;
   margin-bottom: 10px;
-  transition: color 0.3s ease;
 }
 
-.title:hover {
-  color: #5e4ec8; /* Hover color for the title */
-}
-
-/* Subtitle Styling */
 .subtitle {
-  font-size: 16px;
-  color: #888;
+  font-size: 14px;
+  color: #666;
   margin-bottom: 25px;
-  line-height: 1.5;
-  transition: color 0.3s ease;
 }
 
-.subtitle:hover {
-  color: #6c5ce7; /* Hover effect for subtitle */
+.form-box h2 {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 20px;
 }
 
-/* Input Field Styling */
 .form-box input {
   width: 100%;
   padding: 14px 16px;
-  margin-bottom: 20px; /* Increased margin for more spacing */
-  border-radius: 8px;
+  margin-bottom: 20px;
+  border-radius: 12px;
   border: 1px solid #ccc;
   font-size: 16px;
-  color: #333;
   outline: none;
-  transition: all 0.3s ease;
+  background: #fff;
+  transition: 0.3s ease;
 }
 
 .form-box input:focus {
-  border-color: #6c5ce7; /* Focus color matches the accent color */
-  box-shadow: 0 0 8px rgba(108, 92, 231, 0.5); /* Soft glow effect */
+  border-color: #2575fc;
+  box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
 }
 
-.form-box input:hover {
-  border-color: #6c5ce7; /* Hover effect for inputs */
-}
-
-/* Button Styling */
+/* Button */
 .form-box button {
   width: 100%;
-  padding: 16px;
-  background-color: #6c5ce7; /* Button color matches the title accent */
-  color: white;
+  padding: 14px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #fff;
   font-size: 16px;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .form-box button:hover {
-  background-color: #5e4ec8; /* Darker shade on hover */
-  transform: translateY(-3px); /* Lift effect */
-  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); /* Soft shadow effect */
+  background: linear-gradient(to right, #5b0be0, #1d5edb);
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(37, 117, 252, 0.35);
 }
 
-.form-box button:active {
-  background-color: #4e3b98; /* Darker shade on click */
-  transform: translateY(2px); /* Slight push down effect */
-  box-shadow: 0 0 10px rgba(108, 92, 231, 0.6); /* Shadow effect on click */
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-/* User Role Dropdown Styling */
-.form-box select {
-  width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 20px; /* Space between User Role and next input fields */
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  color: #333;
-  outline: none;
-  background-color: #fff;
-  transition: all 0.3s ease;
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
 
-.form-box select:focus {
-  border-color: #6c5ce7; /* Focus color matches the accent color */
-  box-shadow: 0 0 8px rgba(108, 92, 231, 0.5); /* Soft glow effect */
-}
-
-.form-box select:hover {
-  border-color: #6c5ce7; /* Hover effect for select input */
-}
-
-/* Toggle Link Styling */
-.toggle-link {
-  margin-top: 15px;
-  color: #6c5ce7;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.toggle-link:hover {
-  text-decoration: underline;
-  color: #5e4ec8; /* Slightly darker shade on hover */
-}
-
-.add-btn:disabled {
-  color: none !important;
-  cursor: not-allowed !important;
-  box-shadow: none !important;
-  animation: none !important;
-  transform: none !important;
-}
-
-/* Media Query for Smaller Devices */
+/* Responsive */
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
-    border-radius: 8px;
+    height: auto;
+    border-radius: 0;
   }
 
   .login-left, .login-right {
+    flex: none;
     width: 100%;
-    height: auto;
+    min-height: 50vh;
   }
 
   .form-box {
-    padding: 30px;
+    padding: 35px 25px;
+    margin: 20px 0;
   }
 
-  .form-box input,
-  .form-box button {
-    font-size: 14px;
+  .title {
+    font-size: 26px;
   }
 
-  .full-illustration {
-    height: 300px;
-    object-fit: contain;
+  .form-box h2 {
+    font-size: 22px;
   }
 }

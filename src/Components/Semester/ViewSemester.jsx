@@ -103,9 +103,14 @@ const ViewSemester = () => {
   return (
     <Container maxWidth="lg" className="semester-container">
       <Paper elevation={6} className="semester-paper">
-        <Typography variant="h4" className="semester-title">
-          🎓 All Semester's
-        </Typography>
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h4" className="semester-title">
+            🎓 All Semester's
+          </Typography>
+          <Typography variant="subtitle1" className="semester-subtitle">
+                Manage, edit, and review available semester offerings.
+          </Typography>
+        </Box>
 
         <Box sx={{ overflowX: "auto" }}>
           <Table className="semester-table">

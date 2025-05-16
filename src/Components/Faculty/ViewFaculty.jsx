@@ -114,9 +114,14 @@ const ViewFaculty = () => {
   return (
     <Container maxWidth="lg" className="teacher-container">
       <Paper className="teacher-paper" elevation={6}>
+        <Box textAlign="center" mb={3}>
         <Typography variant="h4" className="teacher-title">
           👨‍🏫 All Faculty's
         </Typography>
+        <Typography variant="subtitle1" className="faculty-subtitle">
+              Manage, edit, and review available faculty offerings.
+        </Typography>
+        </Box>
 
         <Box sx={{ overflowX: "auto", marginTop: 2 }}>
           <Table className="teacher-table">
