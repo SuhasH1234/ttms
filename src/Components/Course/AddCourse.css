@@ -111,7 +111,7 @@ body {
 }
 
 .add-btn:disabled {
-  color: none !important;
+  color: white !important;
   cursor: not-allowed !important;
   box-shadow: none !important;
   animation: none !important;
